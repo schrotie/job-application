@@ -1,0 +1,89 @@
+<link rel="import" href="appl-hello.html">
+<link rel="import" href="appl-facts.html">
+<link rel="import" href="appl-life.html">
+<link rel="import" href="appl-contact.html">
+
+<link rel="import" href="appl-abi.html">
+<link rel="import" href="appl-diplom.html">
+
+<dom-module id="appl-print">
+	<template>
+		<style include="shared-styles">
+			:host {
+				display: block;
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				min-height: 100%;
+				background-color: white;
+
+				--appl-print-theme: {
+					margin: 0;
+					padding: 20mm;
+					display: block;
+					width: 21cm;
+					min-height: 297mm;
+					color: #000;
+					box-shadow: none;
+				};
+			}
+			:host > appl-hello,
+			:host > appl-facts,
+			:host > appl-life {
+				display: block;
+			}
+
+			:host .head {
+				position: relative;
+				height: 15em;
+			}
+			:host appl-contact {
+				position: absolute;
+				top: 0;
+				right: 0;
+			}
+			/* Chrome does not support page breaks, this hack should fix it but doesn't:
+				html, body, .main, .tabs, .tabbed-content { float: none; }
+			*/
+			:host > .pageBreak {
+				display: block;
+				page-break-inside: avoid;
+				page-break-after: always;
+				position: relative;
+			}
+			/*
+			@page {
+				size: 21cm 29.7cm;
+				margin: 20mm 20mm 20mm 20mm;
+			}
+			*/
+		</style>
+
+		
+		<appl-hello   name="hello"  >
+			<div class="head">
+				<appl-contact name="contact"></appl-contact>
+			</div>
+		</appl-hello>
+<!--
+		<div class="pageBreak"></div>
+-->
+		<appl-facts   name="facts"  ></appl-facts>
+<!--
+		<div class="pageBreak"></div>
+-->
+		<appl-life    name="life" class="print"  ></appl-life>
+
+		<appl-abi></appl-abi>
+		<appl-diplom></appl-diplom>
+		<appl-promotion></appl-promotion>
+		<appl-echelon1></appl-echelon1>
+		<appl-echelon2></appl-echelon2>
+	</template>
+	<script>
+Polymer({
+	is: 'appl-print'
+});
+	</script>
+</dom-module>

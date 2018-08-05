@@ -1,0 +1,63 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="Polymer Starter Kit">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>Thorsten Roggendorf</title>
+    <meta name="description" content="Thorsten Roggendorf's Application">
+
+    <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QQDDS0TWrXjywAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAACTSURBVDjLY2RgYPjPQBgw4pJgYqAy+E+ki6jnApob8B8N/2VgYHjMwMAwm4GBQZiYMPiPB68ixQCYayUZGBgaoWLvSTUABgSgYk9JDUQOBgYGLQYGhplQ/jpKwmAHAwMDHykJCxl/ZWBgkCMnZXIyMDBchPIPMzAwMJOTtFUZGBg+QsWayc0bIUiJyoHczDURFpUAwvtCJPMwWpUAAAAASUVORK5CYII=">
+
+    <!-- See https://goo.gl/qRE0vM -->
+    <meta name="theme-color" content="#3f51b5">
+
+	 <script src="/bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script>
+      // Setup Polymer options
+      window.Polymer = {
+        dom: 'shadow',
+        lazyRegister: true,
+      };
+
+		// classList.toggle not available on IE
+		function applToggleClass(element, className, bool) {
+			if(!element) return;
+			var clas = element.className.split(" ");
+			var idx = clas.indexOf(className);
+			if(arguments.length == 2) bool = idx === -1;
+			if((idx !== -1) && bool) return;
+			if(bool) clas.push(className);
+			else clas.splice(idx, 1);
+			element.className = clas.join(" ");
+		}
+
+    </script>
+
+    <link rel="import" href="/src/appl-app.html">
+
+    <style>
+      body {
+        margin: 0;
+        font-family: 'Roboto', 'Noto', sans-serif;
+        line-height: 1.5;
+        min-height: 100vh;
+        background-color: #eeeeee;
+      }
+    </style>
+  </head>
+  <body>
+    <appl-app></appl-app>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+<!--
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+-->
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="appl-contact.html">
+<dom-module id="appl-contactcard">
+	<template>
+		<style include="shared-styles">
+			:host {display: block;}
+			/*
+			:host > div > appl-contact,
+			:host > div > span {display: inline-block;}
+			:host > div > span {
+				vertical-align: top;
+				margin-left: 3em;
+			}
+			:host > div > span > paper-icon-button {
+				color: var(--app-secondary-color);
+				background-color: var(--app-primary-color);
+				border-radius: 50%;
+				box-shadow: var(--appl-z1-shadow);
+			}
+			:host > div > span > paper-icon-button:hover {
+				box-shadow: var(--appl-z2-shadow);
+			}
+			*/
+		</style>
+		<div class="card">
+			<appl-contact></appl-contact>
+			<!--
+			<span on-tap="_add">
+				<paper-icon-button icon="appl-icons:plus"></paper-icon-button>
+			</span>
+			-->
+		</div>
+	</template>
+
+	<script>
+Polymer({
+	is: 'appl-contactcard'//,
+	//ready:function() {alert("Intent" + window.Intent);},
+	//_add:function() {console.log("add");}
+});
+	</script>
+</dom-module>

@@ -1,0 +1,202 @@
+<!--
+	@license
+	Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+	This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+	The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+	The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+	Code distributed by Google as part of the polymer project is also
+	subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+
+<link rel="import" href="appl-icons.html">
+
+<link rel="import" href="appl-hello.html">
+<link rel="import" href="appl-facts.html">
+<link rel="import" href="appl-life.html">
+<link rel="import" href="appl-cert.html">
+<link rel="import" href="appl-samples.html">
+<link rel="import" href="appl-contactcard.html">
+<link rel="import" href="appl-about.html">
+<link rel="import" href="appl-print.html">
+
+<dom-module id="appl-app">
+	<template>
+		<style include="shared-styles">
+			:host {
+				--app-primary-color: #e0ff6a;
+				--app-secondary-color: #840021;
+				--app-drawer-width: 11em;
+
+				display: block;
+			}
+
+			:host app-header {
+				background-color: var(--app-primary-color);
+				color: var(--app-secondary-color);
+				font-weight: bold;
+				/*@apply(--shadow-elevation-3dp);*/
+				box-shadow: var(--appl-z2-shadow);
+			}
+			:host app-header paper-icon-button {
+				--paper-icon-button-ink-color: var(--app-secondary-color);
+			}
+
+			:host .drawer-list {
+				margin: 0 20px;
+			}
+
+			:host .drawer-list a {
+				display: block;
+				padding: 0 16px;
+				text-decoration: none;
+				color: #000;
+				opacity: 0.5;
+				line-height: 40px;
+				transition: 0.5s;
+			}
+
+			:host .drawer-list a.iron-selected {
+				opacity: 1;
+				font-weight: bold;
+			}
+
+			:host app-header-layout div {position: relative;}
+			:host app-header-layout appl-hello,
+			:host app-header-layout appl-facts,
+			:host app-header-layout appl-life,
+			:host app-header-layout appl-cert,
+			:host app-header-layout appl-samples,
+			:host app-header-layout appl-contactcard,
+			:host app-header-layout appl-about {
+				/*transition: opacity 0.5s, display 0s 0s;
+				display: none;*/
+				transition: height 0.5s;
+				opacity: 0;
+				position: absolute;
+				top:0;
+				left: 0;
+				min-width: 100%;
+				height: 0;
+				overflow: hidden;
+			}
+			:host app-header-layout appl-hello[appl-selected],
+			:host app-header-layout appl-facts[appl-selected],
+			:host app-header-layout appl-life[appl-selected],
+			:host app-header-layout appl-cert[appl-selected],
+			:host app-header-layout appl-samples[appl-selected],
+			:host app-header-layout appl-contactcard[appl-selected],
+			:host app-header-layout appl-about[appl-selected] {
+				transition: opacity 0.9s, display 0s 0.5s;
+				height: initial;
+				z-index: 1;
+				opacity: 1;
+				display: block;
+			}
+
+		</style>
+
+		<app-location route="{{route}}" use-hash-as-path></app-location>
+		<app-route
+			route="{{route}}"
+			pattern=":page"
+			data="{{routeData}}"
+			tail="{{subroute}}"
+		></app-route>
+
+		<template is="dom-if" if="[[!_isPrint(page)]]">
+			<app-drawer-layout fullbleed>
+				<!-- Drawer content -->
+				<app-drawer id="drawer">
+					<app-toolbar>Contents</app-toolbar>
+					<iron-selector
+						selected="[[page]]"
+						attr-for-selected="name"
+						class="drawer-list"
+						role="navigation"
+					>
+						<a name="hello"   href="#hello"  >Hello</a>
+						<a name="facts"   href="#facts"  >Fact Sheet</a>
+						<a name="life"    href="#life"   >Professional</a>
+						<a name="cert"    href="#cert"   >Certificates</a>
+						<a name="samples" href="#samples">Work Samples</a>
+						<a name="contact" href="#contact">Contact</a>
+						<a name="print"   href="#print"  >Print</a>
+					</iron-selector>
+				</app-drawer>
+
+				<!-- Main content -->
+				<app-header-layout>
+
+					<app-header condenses reveals effects="waterfall">
+						<app-toolbar>
+							<paper-icon-button icon="appl-icons:menu" drawer-toggle></paper-icon-button>
+							<div main-title>Thorsten Roggendorf</div>
+						</app-toolbar>
+					</app-header>
+					<div>
+						<appl-hello       appl-selected$='[[_eql(page, "hello"  )]]'></appl-hello>
+						<appl-facts       appl-selected$='[[_eql(page, "facts"  )]]'></appl-facts>
+						<appl-life        appl-selected$='[[_eql(page, "life"   )]]'></appl-life>
+						<appl-cert        appl-selected$='[[_eql(page, "cert"   )]]'></appl-cert>
+						<appl-samples     appl-selected$='[[_eql(page, "samples")]]'></appl-samples>
+						<appl-contactcard appl-selected$='[[_eql(page, "contact")]]'></appl-contactcard>
+					</div>
+				</app-header-layout>
+			</app-drawer-layout>
+		</template>
+		<template is="dom-if" if="[[_isPrint(page)]]">
+			<appl-print id="print"></appl-print>
+		</template>
+	</template>
+
+	<script>
+
+(function() {
+
+	var queued;
+	function queuePrint() {
+		if(queued) return;
+		queued = true;
+		setTimeout(function() {
+			queued = false;
+			window.print();
+		}, 100);
+	}
+	Polymer({
+		is: 'appl-app',
+
+		properties: {appl: Object},
+
+		observers: ['_routePageChanged(routeData.page)'],
+
+		_routePageChanged: function(page) {
+			this.page = page || 'hello';
+			try {
+				document.body.scrollTop = 0;
+				document.body.parentElement.scrollTop = 0;
+			} catch(e) {}
+			try {
+				var drawer = this.$$("app-drawer");
+				if(!drawer.persistent) drawer.close();
+				else this.$$("app-drawer-layout").notifyResize();
+			} catch(e) {}
+			if(page == "print") queuePrint();
+		},
+		_isPrint:function(page) {return page === "print";},
+		_eql:function(a, b) {return a === b;}
+	});
+})();
+	</script>
+</dom-module>

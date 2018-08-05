@@ -1,0 +1,27 @@
+<dom-module id="appl-content">
+	<script>
+
+var appl = {
+	hello:{
+		address:"Dear",
+		paragraph:[
+			"Dear human resource person",
+			"My friend and your colleague Christian Linder and me chatted about life and work. He spoke very fondly of your company. This conversation convinced my that QIO is a perfect fit for my current life and carrer - and that my skill set pretty precisely fits certain positions of QIO.",
+			"I am currently CTO of A"
+		]
+	},
+	facts:{
+	},
+	life:{
+	},
+	content:{
+	}
+};
+
+
+Polymer({
+	is: 'appl-content',
+	properties: {appl: {type:Object, notify:true, value:appl}}
+});
+	</script>
+</dom-module>
