@@ -12,4 +12,6 @@ and finally call the build.sh (Linux shell script).
 For development you'll have more fun if you install polymer-cli and run
 `polymer serve`.
 
+[Demo](http://schrotie.de/applApp/demo.html)
+
 Enjoy.
