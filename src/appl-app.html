@@ -52,6 +52,9 @@
 			:host app-header paper-icon-button {
 				--paper-icon-button-ink-color: var(--app-secondary-color);
 			}
+			app-drawer-layout:not([narrow]) [drawer-toggle] {
+				display: none;
+			}
 
 			:host .drawer-list {
 				margin: 0 20px;
@@ -118,7 +121,7 @@
 		<template is="dom-if" if="[[!_isPrint(page)]]">
 			<app-drawer-layout fullbleed>
 				<!-- Drawer content -->
-				<app-drawer id="drawer">
+				<app-drawer slot="drawer">
 					<app-toolbar>Contents</app-toolbar>
 					<iron-selector
 						selected="[[page]]"
@@ -139,7 +142,7 @@
 				<!-- Main content -->
 				<app-header-layout>
 
-					<app-header condenses reveals effects="waterfall">
+					<app-header slot="header" condenses reveals effects="waterfall">
 						<app-toolbar>
 							<paper-icon-button icon="appl-icons:menu" drawer-toggle></paper-icon-button>
 							<div main-title>Thorsten Roggendorf</div>
