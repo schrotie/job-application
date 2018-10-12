@@ -164,7 +164,6 @@
 	<script>
 
 (function() {
-
 	var queued;
 	function queuePrint() {
 		if(queued) return;
@@ -188,14 +187,14 @@
 				document.body.parentElement.scrollTop = 0;
 			} catch(e) {}
 			try {
-				var drawer = this.$$("app-drawer");
+				var drawer = this.$$('app-drawer');
 				if(!drawer.persistent) drawer.close();
-				else this.$$("app-drawer-layout").notifyResize();
+				else this.$$('app-drawer-layout').notifyResize();
 			} catch(e) {}
-			if(page == "print") queuePrint();
+			if(page == 'print') queuePrint();
 		},
-		_isPrint:function(page) {return page === "print";},
-		_eql:function(a, b) {return a === b;}
+		_isPrint: function(page) {return page === 'print';},
+		_eql: function(a, b) {return a === b;},
 	});
 })();
 	</script>
