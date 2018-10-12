@@ -52,6 +52,11 @@
 			:host > div.filtered > div.empty   {display: none;}
 			:host > div.filtered > div > span  {font-size: 0;}
 			:host > div.filtered > div .context{font-size: initial;}
+			:host > div > div > span h4,
+			:host > div.filtered > div > span h4 {
+				margin: 0;
+				font-size: 1rem;
+			}
 			:host > div.filtered > div > span span.emphasis {
 				font-size: initial;
 				font-style: normal;
@@ -94,6 +99,7 @@
 			:host(.print) > div.filtered > div > label {flex: 0 0 5em;}
 			:host(.print) > div.filtered > div > span  {font-size: initial;}
 			:host(.print) > div.filtered > div > span span.emphasis {
+				font-style: italic;
 				cursor: text;
 			}
 			:host(.print) > div.filtered > div > span span.emphasis:after {content: "";}
@@ -122,7 +128,7 @@
 			</div>
 			<div class="empty">
 				<label>1972</label>
-				<span>Hello world!</span>
+				<span><h4>Hello world!</h4></span>
 			</div>
 			<div class="empty">
 				<label>1977</label>
@@ -136,6 +142,7 @@
 			<div>
 				<label>1992 ...</label>
 				<span>
+					<h4>Student</h4>
 					When I finally grew up to that goal I found that the great
 					names of that field had grown, too, i.e. tired of waiting for
 					me; and died - and left their field somewhat deserted. What
@@ -151,6 +158,7 @@
 			<div>
 				<label>1999 ...</label>
 				<span>
+					<h4>Scientific assistant at Bielefeld University</h4>
 					Many lines of code and a couple of books later I
 					<span class="emphasis" on-tap="_context">taught C++</span>
 					to other biologists. I discovered my enthusiasm for
@@ -182,6 +190,7 @@
 			<div>
 				<label>2006 ...</label>
 				<span>
+					<h4>Web-Developer at Echelon EDC</h4>
 					Echelon, my first employer in business, called their chips
 					"Neurons". I doubt they did it to attract biologists, but they
 					got me anyway. I was lucky to work for a progressive boss
@@ -217,6 +226,7 @@
 			<div>
 				<label>2013 ...</label>
 				<span>
+					<h4>CTO, co-founder and partner at ARIGO Software</h4>
 					<div>
 					Echelon closed many offices around the world, mine among those.
 					My boss, five core developers, and I decided to build a new
@@ -316,8 +326,9 @@
 				</span>
 			</div>
 			<div>
-				<label>2017 - ?</label>
+				<label>2017 ...</label>
 				<span>
+					<h4>Lead developer at QiO technologies</h4>
 					<div>
 					... working remotely for QiO, an utterly distributed company,
 					developing <span class="emphasis" on-tap="_context">enterprise
@@ -350,28 +361,60 @@
 					</div>
 				</span>
 			</div>
+			<div>
+				<label>2018</label>
+				<span>
+					<h4>Freelance IT consultant</h4>
+					Having long considered - and on the side: tried - freelancing,
+					I finally decided to go all in.
+				</span>
+			</div>
+			<div>
+				<label>2018</label>
+				<span>
+					<h4>Page-speed consultant at C&amp;A</h4>
+					C&amp;A is one of the top German textile companies. My job was
+					to make their online shop load faster. I performed a deep
+					<span class="emphasis" on-tap="_context">page load analysis</span>
+					including features and behavior of the
+					<span class="emphasis" on-tap="_context">CDN</span>
+					and documented my findings and proposed measures. Then I
+					collaborated with the marketing,
+					<span class="emphasis" on-tap="_context">tracking</span>-,
+					<span class="emphasis" on-tap="_context">monitoring</span>-, and
+					development-teams on how to implement the measures. I worked with
+					<span class="emphasis" on-tap="_context">grafana</span> to
+					measure the results of the improvements and implemented a custom
+					<span class="emphasis" on-tap="_context">AMD</span>-like loader
+					to prioritize and schedule the code excution. Finally I
+					implemented a somewhat complex
+					<span class="emphasis" on-tap="_context">Service Worker</span>
+					to lower the loading delays.
+				</span>
+			</div>
 		</div>
 	</template>
 
 	<script>
+/* global applToggleClass */
 Polymer({
 	is: 'appl-life',
-	ready:function() {
+	ready: function() {
 		this._filter();
 	},
-	_filter:function() {
+	_filter: function() {
 		this._filtered = !this.filtered;
-		applToggleClass(this.$.card, "filtered");
+		applToggleClass(this.$.card, 'filtered');
 	},
-	_context:function(evt) {
+	_context: function(evt) {
 		if(!this._filtered || /print/.test(this.className)) return;
 		var revert = evt.target.className.match(/toggled/);
-		applToggleClass(this.$$(".context"), "context");
-		applToggleClass(this.$$(".toggled"), "toggled");
+		applToggleClass(this.$$('.context'), 'context');
+		applToggleClass(this.$$('.toggled'), 'toggled');
 		if(revert) return;
-		applToggleClass(evt.target, "toggled");
-		applToggleClass(evt.target.parentElement, "context");
-	}
+		applToggleClass(evt.target, 'toggled');
+		applToggleClass(evt.target.parentElement, 'context');
+	},
 });
 	</script>
 </dom-module>
