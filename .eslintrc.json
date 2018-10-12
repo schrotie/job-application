@@ -1,0 +1,24 @@
+{
+	"extends": ["eslint:recommended", "google"],
+	"env": {
+		"browser": true
+	},
+	"plugins": [
+		"html"
+  ],
+  "rules": {
+		"brace-style": "off",
+		"eol-last":"off",
+		"keyword-spacing": "off",
+		"new-cap": ["error", { "capIsNewExceptions": ["Polymer"] }],
+		"no-empty":"off",
+		"no-multi-spaces":"off",
+		"no-tabs": "off",
+		"no-var": "off",
+		"padded-blocks":"off",
+		"require-jsdoc": "off"
+  },
+  "globals": {
+	  "Polymer": true
+  }
+}
