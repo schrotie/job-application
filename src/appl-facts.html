@@ -31,6 +31,7 @@
 				width: 17em;
 				float: right;
 				transition: 0.5s;
+				cursor: pointer;
 			}
 			:host > div > section > appl-portrait.zoom {
 				width: 100%;
@@ -122,9 +123,10 @@
 	</template>
 
 	<script>
+/* global applToggleClass */
 Polymer({
 	is: 'appl-facts',
-	_zoomPortrait: function() {applToggleClass(this.$.portrait, "zoom");}
+	_zoomPortrait: function() {applToggleClass(this.$.portrait, 'zoom');},
 });
 	</script>
 </dom-module>
