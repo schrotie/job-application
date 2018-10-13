@@ -1,25 +1,17 @@
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
-<link rel="import" href="appl-abi1.html">
-<link rel="import" href="appl-abi2.html">
-<link rel="import" href="appl-abi3.html">
-<link rel="import" href="appl-abi4.html">
-<link rel="import" href="appl-diplom1.html">
-<link rel="import" href="appl-diplom2.html">
-<link rel="import" href="appl-promotion.html">
-<link rel="import" href="appl-echelon1.html">
-<link rel="import" href="appl-echelon2.html">
+<link rel="import" href="dumb-elements.html">
 <link rel="import" href="shared-styles.html">
 <dom-module id="appl-cert">
 	<template>
 		<style include="shared-styles">
 			:host {
 			}
-			:host > .card {
+			:host > div {
 				position: relative;
 				padding-top: 150px;
 			}
-			:host > .card > iron-selector {
+			:host > div > iron-selector {
 				display: flex;
 				flex-wrap: nowrap;
 				justify-content: space-between;
@@ -30,34 +22,34 @@
 				left: 16px;
 				right: 16px;
 			}
-			:host > .card:before {
+			:host > div:before {
 				content: "\2190";
 				left: 1px;
 			}
-			:host > .card:after {
+			:host > div:after {
 				content: "\2192";
 				right: 1px;
 			}
-			:host > .card:before,
-			:host > .card:after {
+			:host > div:before,
+			:host > div:after {
 				position: absolute;
 				top: 75px;
 				opacity: 0.5;
 			}
-			:host > .card > iron-selector > div  {flex-shrink: 0;}
-			:host > .card > iron-selector > div > div {white-space: nowrap;}
-			:host > .card > iron-selector > div > div + * {
+			:host > div > iron-selector > div  {flex-shrink: 0;}
+			:host > div > iron-selector > div > div {white-space: nowrap;}
+			:host > div > iron-selector > div > div + * {
 				cursor: pointer;
 				padding: 1px;
 				width: 4em;
 			}
-			:host > .card > iron-selector > div.iron-selected {
+			:host > div > iron-selector > div.iron-selected {
 				outline: 2px solid var(--app-primary-color);
 			}
-			:host > .card > iron-selector > div > div {text-align: center;}
-			:host > .card > iron-pages > * {width: 100%;}
+			:host > div > iron-selector > div > div {text-align: center;}
+			:host > div > iron-pages > * {width: 100%;}
 		</style>
-		<div class="card">
+		<div>
 			<iron-selector
 				selected="{{selected}}"
 				attr-for-selected="name"
@@ -89,9 +81,9 @@
 	</template>
 
 	<script>
-Polymer({
-	is: 'appl-cert',
-	_selected:function(a, b) {return a === b;}
+customElements.define('appl-cert', class extends Polymer.Element {
+	static get is() {return 'appl-cert';}
+	constructor() {super();}
 });
 	</script>
 </dom-module>

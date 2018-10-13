@@ -22,14 +22,9 @@
 
 <link rel="import" href="appl-icons.html">
 
-<link rel="import" href="appl-hello.html">
-<link rel="import" href="appl-facts.html">
-<link rel="import" href="appl-life.html">
 <link rel="import" href="appl-cert.html">
-<link rel="import" href="appl-samples.html">
-<link rel="import" href="appl-contactcard.html">
-<link rel="import" href="appl-about.html">
-<link rel="import" href="appl-print.html">
+<link rel="import" href="appl-life.html">
+<link rel="import" href="dumb-elements.html">
 
 <dom-module id="appl-app">
 	<template>
@@ -81,7 +76,7 @@
 			:host app-header-layout appl-life,
 			:host app-header-layout appl-cert,
 			:host app-header-layout appl-samples,
-			:host app-header-layout appl-contactcard,
+			:host app-header-layout appl-contact,
 			:host app-header-layout appl-about {
 				/*transition: opacity 0.5s, display 0s 0s;
 				display: none;*/
@@ -99,13 +94,29 @@
 			:host app-header-layout appl-life[appl-selected],
 			:host app-header-layout appl-cert[appl-selected],
 			:host app-header-layout appl-samples[appl-selected],
-			:host app-header-layout appl-contactcard[appl-selected],
+			:host app-header-layout appl-contact[appl-selected],
 			:host app-header-layout appl-about[appl-selected] {
 				transition: opacity 0.9s, display 0s 0.5s;
 				height: initial;
 				z-index: 1;
 				opacity: 1;
 				display: block;
+				position: static;
+			}
+
+			.card {
+				display: block;
+				padding: 16px;
+				color: #333;
+				border-radius: 5px;
+				background-color: #fff;
+				max-width: 21cm;
+			}
+			@media screen and (min-width: 450px) {
+				.card {
+					margin: 24px;
+					box-shadow: var(--appl-z1-shadow);
+				}
 			}
 
 		</style>
@@ -148,13 +159,13 @@
 							<div main-title>Thorsten Roggendorf</div>
 						</app-toolbar>
 					</app-header>
-					<div>
-						<appl-hello       appl-selected$='[[_eql(page, "hello"  )]]'></appl-hello>
-						<appl-facts       appl-selected$='[[_eql(page, "facts"  )]]'></appl-facts>
-						<appl-life        appl-selected$='[[_eql(page, "life"   )]]'></appl-life>
-						<appl-cert        appl-selected$='[[_eql(page, "cert"   )]]'></appl-cert>
-						<appl-samples     appl-selected$='[[_eql(page, "samples")]]'></appl-samples>
-						<appl-contactcard appl-selected$='[[_eql(page, "contact")]]'></appl-contactcard>
+					<div class="card">
+						<appl-hello   appl-selected$='[[_eql(page, "hello"  )]]'></appl-hello>
+						<appl-facts   appl-selected$='[[_eql(page, "facts"  )]]'></appl-facts>
+						<appl-life    appl-selected$='[[_eql(page, "life"   )]]'></appl-life>
+						<appl-cert    appl-selected$='[[_eql(page, "cert"   )]]'></appl-cert>
+						<appl-samples appl-selected$='[[_eql(page, "samples")]]'></appl-samples>
+						<appl-contact appl-selected$='[[_eql(page, "contact")]]'></appl-contact>
 					</div>
 				</app-header-layout>
 			</app-drawer-layout>
@@ -176,14 +187,11 @@
 			window.print();
 		}, 100);
 	}
-	Polymer({
-		is: 'appl-app',
-
-		properties: {appl: Object},
-
-		observers: ['_routePageChanged(routeData.page)'],
-
-		_routePageChanged: function(page) {
+	customElements.define('appl-app', class extends Polymer.Element {
+		static get is() {return 'appl-app';}
+		constructor() {super();}
+		static get observers() {return ['_routePageChanged(routeData.page)'];}
+		_routePageChanged(page) {
 			this.page = page || 'hello';
 			try {
 				document.body.scrollTop = 0;
@@ -195,9 +203,9 @@
 				else this.$$('app-drawer-layout').notifyResize();
 			} catch(e) {}
 			if(page == 'print') queuePrint();
-		},
-		_isPrint: function(page) {return page === 'print';},
-		_eql: function(a, b) {return a === b;},
+		}
+		_isPrint(page) {return page === 'print';}
+		_eql(a, b) {return a === b;}
 	});
 })();
 	</script>
