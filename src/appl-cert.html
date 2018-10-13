@@ -1,5 +1,4 @@
-<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
-<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="appl-selector.html">
 <link rel="import" href="dumb-elements.html">
 <link rel="import" href="shared-styles.html">
 <dom-module id="appl-cert">
@@ -7,11 +6,12 @@
 		<style include="shared-styles">
 			:host {
 			}
-			:host > div {
+			:host > appl-selector {
 				position: relative;
 				padding-top: 150px;
+				display: block;
 			}
-			:host > div > iron-selector {
+			:host > appl-selector > #selector {
 				display: flex;
 				flex-wrap: nowrap;
 				justify-content: space-between;
@@ -22,62 +22,60 @@
 				left: 16px;
 				right: 16px;
 			}
-			:host > div:before {
+			:host > appl-selector:before {
 				content: "\2190";
 				left: 1px;
 			}
-			:host > div:after {
+			:host > appl-selector:after {
 				content: "\2192";
 				right: 1px;
 			}
-			:host > div:before,
-			:host > div:after {
+			:host > appl-selector:before,
+			:host > appl-selector:after {
 				position: absolute;
 				top: 75px;
 				opacity: 0.5;
 			}
-			:host > div > iron-selector > div  {flex-shrink: 0;}
-			:host > div > iron-selector > div > div {white-space: nowrap;}
-			:host > div > iron-selector > div > div + * {
+			:host > appl-selector > #selector > div  {flex-shrink: 0;}
+			:host > appl-selector > #selector > div > div {white-space: nowrap;}
+			:host > appl-selector > #selector > div > div + * {
 				cursor: pointer;
 				padding: 1px;
 				width: 4em;
 			}
-			:host > div > iron-selector > div.iron-selected {
+			:host > appl-selector > #selector > div.selected {
 				outline: 2px solid var(--app-primary-color);
 			}
-			:host > div > iron-selector > div > div {text-align: center;}
-			:host > div > iron-pages > * {width: 100%;}
+			:host > appl-selector > #selector > div > div {text-align: center;}
+			:host > appl-selector > #selector + div {margin-top: 1em;}
+			:host > appl-selector > #page > * {width: 100%; display: none;}
+			:host > appl-selector > #page > *.selected {display: block;}
 		</style>
-		<div>
-			<iron-selector
-				selected="{{selected}}"
-				attr-for-selected="name"
-				role="navigation"
-			>
-				<div name="abi1"     ><div>Abitur  1</div><appl-abi1     ></appl-abi1></div>
-				<div name="abi2"     ><div>Abitur  2</div><appl-abi2     ></appl-abi2></div>
-				<div name="abi3"     ><div>Abitur  3</div><appl-abi3     ></appl-abi3></div>
-				<div name="abi4"     ><div>Abitur  4</div><appl-abi4     ></appl-abi4></div>
-				<div name="diplom1"  ><div>Diploma 1</div><appl-diplom1  ></appl-diplom1></div>
-				<div name="diplom2"  ><div>Diploma 2</div><appl-diplom2  ></appl-diplom2></div>
-				<div name="promotion"><div>PhD      </div><appl-promotion></appl-promotion></div>
-				<div name="echelon1" ><div>Echelon 1</div><appl-echelon1 ></appl-echelon1></div>
-				<div name="echelon2" ><div>Echelon 2</div><appl-echelon2 ></appl-echelon2></div>
-			</iron-selector>
+		<appl-selector>
+			<div id="selector">
+				<div data-selector="abi1"     ><div>Abitur  1</div><appl-abi1     ></appl-abi1></div>
+				<div data-selector="abi2"     ><div>Abitur  2</div><appl-abi2     ></appl-abi2></div>
+				<div data-selector="abi3"     ><div>Abitur  3</div><appl-abi3     ></appl-abi3></div>
+				<div data-selector="abi4"     ><div>Abitur  4</div><appl-abi4     ></appl-abi4></div>
+				<div data-selector="diplom1"  ><div>Diploma 1</div><appl-diplom1  ></appl-diplom1></div>
+				<div data-selector="diplom2"  ><div>Diploma 2</div><appl-diplom2  ></appl-diplom2></div>
+				<div data-selector="promotion"><div>PhD      </div><appl-promotion></appl-promotion></div>
+				<div data-selector="echelon1" ><div>Echelon 1</div><appl-echelon1 ></appl-echelon1></div>
+				<div data-selector="echelon2" ><div>Echelon 2</div><appl-echelon2 ></appl-echelon2></div>
+			</div>
 			<div>Select above to display or <a href="http://schrotie.de/applApp/zeugnisse.pdf">download high-res scans</a>.</div>
-			<iron-pages selected="{{selected}}" attr-for-selected="name">
-				<appl-abi1      name="abi1"     ></appl-abi1>
-				<appl-abi2      name="abi2"     ></appl-abi2>
-				<appl-abi3      name="abi3"     ></appl-abi3>
-				<appl-abi4      name="abi4"     ></appl-abi4>
-				<appl-diplom1   name="diplom1"  ></appl-diplom1>
-				<appl-diplom2   name="diplom2"  ></appl-diplom2>
-				<appl-promotion name="promotion"></appl-promotion>
-				<appl-echelon1  name="echelon1" ></appl-echelon1>
-				<appl-echelon2  name="echelon2" ></appl-echelon2>
-			</iron-pages>
-		</div>
+			<div id="page">
+				<appl-abi1      data-selected="abi1"     ></appl-abi1>
+				<appl-abi2      data-selected="abi2"     ></appl-abi2>
+				<appl-abi3      data-selected="abi3"     ></appl-abi3>
+				<appl-abi4      data-selected="abi4"     ></appl-abi4>
+				<appl-diplom1   data-selected="diplom1"  ></appl-diplom1>
+				<appl-diplom2   data-selected="diplom2"  ></appl-diplom2>
+				<appl-promotion data-selected="promotion"></appl-promotion>
+				<appl-echelon1  data-selected="echelon1" ></appl-echelon1>
+				<appl-echelon2  data-selected="echelon2" ></appl-echelon2>
+			</div>
+		</appl-selector>
 	</template>
 
 	<script>

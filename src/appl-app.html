@@ -17,13 +17,13 @@
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
-<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 
 <link rel="import" href="appl-icons.html">
 
 <link rel="import" href="appl-cert.html">
 <link rel="import" href="appl-life.html">
+<link rel="import" href="appl-selector.html">
 <link rel="import" href="dumb-elements.html">
 
 <dom-module id="appl-app">
@@ -36,6 +36,9 @@
 
 				display: block;
 			}
+
+			app-selector {display: none;}
+			app-selector[data-display] {display: none;}
 
 			:host app-header {
 				background-color: var(--app-primary-color);
@@ -51,11 +54,8 @@
 				display: none;
 			}
 
-			:host .drawer-list {
+			:host app-drawer a {
 				margin: 0 20px;
-			}
-
-			:host .drawer-list a {
 				display: block;
 				padding: 0 16px;
 				text-decoration: none;
@@ -65,19 +65,13 @@
 				transition: 0.5s;
 			}
 
-			:host .drawer-list a.iron-selected {
+			:host app-drawer a.selected {
 				opacity: 1;
 				font-weight: bold;
 			}
 
 			:host app-header-layout div {position: relative;}
-			:host app-header-layout appl-hello,
-			:host app-header-layout appl-facts,
-			:host app-header-layout appl-life,
-			:host app-header-layout appl-cert,
-			:host app-header-layout appl-samples,
-			:host app-header-layout appl-contact,
-			:host app-header-layout appl-about {
+			.card > * {
 				/*transition: opacity 0.5s, display 0s 0s;
 				display: none;*/
 				transition: height 0.5s;
@@ -89,13 +83,7 @@
 				height: 0;
 				overflow: hidden;
 			}
-			:host app-header-layout appl-hello[appl-selected],
-			:host app-header-layout appl-facts[appl-selected],
-			:host app-header-layout appl-life[appl-selected],
-			:host app-header-layout appl-cert[appl-selected],
-			:host app-header-layout appl-samples[appl-selected],
-			:host app-header-layout appl-contact[appl-selected],
-			:host app-header-layout appl-about[appl-selected] {
+			.card > *.selected {
 				transition: opacity 0.9s, display 0s 0.5s;
 				height: initial;
 				z-index: 1;
@@ -129,25 +117,18 @@
 			tail="{{subroute}}"
 		></app-route>
 
-		<template is="dom-if" if="[[!_isPrint(page)]]">
+		<appl-selector data-display$="[[!_isPrint(page)]]">
 			<app-drawer-layout fullbleed>
 				<!-- Drawer content -->
 				<app-drawer slot="drawer">
 					<app-toolbar>Contents</app-toolbar>
-					<iron-selector
-						selected="[[page]]"
-						attr-for-selected="name"
-						class="drawer-list"
-						role="navigation"
-					>
-						<a name="hello"   href="#hello"  >Hello</a>
-						<a name="facts"   href="#facts"  >Fact Sheet</a>
-						<a name="life"    href="#life"   >Professional</a>
-						<a name="cert"    href="#cert"   >Certificates</a>
-						<a name="samples" href="#samples">Work Samples</a>
-						<a name="contact" href="#contact">Contact</a>
-						<a name="print"   href="#print"  >Print</a>
-					</iron-selector>
+					<a data-selector="hello"   href="#hello"  >Hello</a>
+					<a data-selector="facts"   href="#facts"  >Fact Sheet</a>
+					<a data-selector="life"    href="#life"   >Professional</a>
+					<a data-selector="cert"    href="#cert"   >Certificates</a>
+					<a data-selector="samples" href="#samples">Work Samples</a>
+					<a data-selector="contact" href="#contact">Contact</a>
+					<a data-selector="print"   href="#print"  >Print</a>
 				</app-drawer>
 
 				<!-- Main content -->
@@ -160,53 +141,54 @@
 						</app-toolbar>
 					</app-header>
 					<div class="card">
-						<appl-hello   appl-selected$='[[_eql(page, "hello"  )]]'></appl-hello>
-						<appl-facts   appl-selected$='[[_eql(page, "facts"  )]]'></appl-facts>
-						<appl-life    appl-selected$='[[_eql(page, "life"   )]]'></appl-life>
-						<appl-cert    appl-selected$='[[_eql(page, "cert"   )]]'></appl-cert>
-						<appl-samples appl-selected$='[[_eql(page, "samples")]]'></appl-samples>
-						<appl-contact appl-selected$='[[_eql(page, "contact")]]'></appl-contact>
+						<appl-hello   data-selected="hello"  ></appl-hello>
+						<appl-facts   data-selected="facts"  ></appl-facts>
+						<appl-life    data-selected="life"   ></appl-life>
+						<appl-cert    data-selected="cert"   ></appl-cert>
+						<appl-samples data-selected="samples"></appl-samples>
+						<appl-contact data-selected="contact"></appl-contact>
 					</div>
 				</app-header-layout>
 			</app-drawer-layout>
-		</template>
+		</appl-selector>
 		<template is="dom-if" if="[[_isPrint(page)]]">
 			<appl-print id="print"></appl-print>
 		</template>
 	</template>
 
-	<script>
-
-(function() {
-	var queued;
-	function queuePrint() {
-		if(queued) return;
-		queued = true;
-		setTimeout(function() {
-			queued = false;
-			window.print();
-		}, 100);
+	<script>(function() {
+var queued;
+function queuePrint() {
+	if(queued) return;
+	queued = true;
+	setTimeout(function() {
+		queued = false;
+		window.print();
+	}, 100);
+}
+customElements.define('appl-app', class extends Polymer.Element {
+	static get is() {return 'appl-app';}
+	constructor() {super();}
+	static get observers() {return ['_routePageChanged(routeData.page)'];}
+	_routePageChanged(page) {
+		this.page = page || 'hello';
+		this._select();
+		try {
+			document.body.scrollTop = 0;
+			document.body.parentElement.scrollTop = 0;
+		} catch(e) {}
+		try {
+			var drawer = this.$$('app-drawer');
+			if(!drawer.persistent) drawer.close();
+			else this.$$('app-drawer-layout').notifyResize();
+		} catch(e) {}
+		if(page == 'print') queuePrint();
 	}
-	customElements.define('appl-app', class extends Polymer.Element {
-		static get is() {return 'appl-app';}
-		constructor() {super();}
-		static get observers() {return ['_routePageChanged(routeData.page)'];}
-		_routePageChanged(page) {
-			this.page = page || 'hello';
-			try {
-				document.body.scrollTop = 0;
-				document.body.parentElement.scrollTop = 0;
-			} catch(e) {}
-			try {
-				var drawer = this.$$('app-drawer');
-				if(!drawer.persistent) drawer.close();
-				else this.$$('app-drawer-layout').notifyResize();
-			} catch(e) {}
-			if(page == 'print') queuePrint();
-		}
-		_isPrint(page) {return page === 'print';}
-		_eql(a, b) {return a === b;}
-	});
-})();
-	</script>
+	_select() {
+		const selector = this.shadowRoot.querySelector('appl-selector');
+		if(selector) selector.selected = this.page;
+	}
+	_isPrint(page) {return page === 'print';}
+});
+	})();</script>
 </dom-module>

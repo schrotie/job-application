@@ -1,6 +1,7 @@
 {
-  "name": "polymer-starter-kit",
-  "license": "BSD-3-Clause",
+  "name": "job-application",
+  "license": "http://unlicense.org/",
+  "version": "0.9.0",
   "devDependencies": {
     "eslint": "^3.12.0",
     "eslint-config-google": "^0.7.1",

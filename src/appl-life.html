@@ -400,10 +400,10 @@
 customElements.define('appl-life', class extends Polymer.Element {
 	static get is() {return 'appl-life';}
 	constructor() {super();}
-	connectedCallback() {this._filter();}
+	connectedCallback() {setTimeout(this._filter.bind(this));}
 	_filter() {
 		this._filtered = !this.filtered;
-		applToggleClass(this.$.card, 'filtered');
+		applToggleClass(this.shadowRoot.querySelector('#card'), 'filtered');
 	}
 	_context(evt) {
 		if(!this._filtered || /print/.test(this.className)) return;
