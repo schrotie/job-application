@@ -103,56 +103,56 @@ defineDumbElement('facts', `
 	:host {
 		position: relative;
 	}
-	:host > section > div {
+	section > div {
 		white-space: nowrap;
 		max-width: 100%;
 	}
-	:host > section:first-child > div {
+	section:first-child > div {
 		display: inline-block;
 	}
-	:host > section > div > label {
+	section > div > label {
 		vertical-align: top;
 		display: inline-block;
 		width: 8em;
 	}
-	:host > section > div > label + span {
+	section > div > label + span {
 		display: inline-block;
 		white-space: normal;
 		max-width: calc(100% - 8em);
 	}
 
-	:host > section > appl-toggle-class > appl-portrait {
+	appl-toggle-class > appl-portrait {
 		width: 17em;
 		float: right;
 		transition: 0.5s;
 		cursor: pointer;
 	}
-	:host > section > appl-toggle-class.zoom > appl-portrait {
+	section > appl-toggle-class.zoom > appl-portrait {
 		width: 100%;
 	}
 
 	${h1Style}
 
 	@media screen and (min-width: 400px) {
-		:host > section.signature {
+		section.signature {
 			margin: 3em 0 0 8em;
 		}
 	}
 	@media screen and (max-width: 400px) {
-		:host > section.signature {
+		section.signature {
 			margin: 3em 0 0 1em;
 		}
 	}
 
-	:host > section.signature {margin-top: 3em;}
-	:host > section.signature > appl-signature {
+	section.signature {margin-top: 3em;}
+	section.signature > appl-signature {
 		width: 15em;
 		display: block;
 	}
 </style>
 <section>
 	<appl-toggle-class data-class="zoom">
-		<appl-portrait id="portrait" on-tap="_zoomPortrait"></appl-portrait>
+		<appl-portrait></appl-portrait>
 	</appl-toggle-class>
 	<h1>Personal Details</h1>
 	<div>
@@ -245,7 +245,7 @@ defineDumbElement('diplom', `
 /// contact ///
 defineDumbElement('contact', `
 <style>
-	:host > address > div:nth-child(3) {margin-bottom: 1em;}
+	address > div:nth-child(3) {margin-bottom: 1em;}
 </style>
 <address>
 	<div>Thorsten Roggendorf</div>
@@ -259,8 +259,8 @@ defineDumbElement('contact', `
 /// samples ///
 defineDumbElement('samples', `
 <style>
-	:host > div > .smallprint,
-	:host > div > .smallprint * {font-size: 0.8em;}
+	div > .smallprint,
+	div > .smallprint * {font-size: 0.8em;}
 	${h1Style}
 </style>
 	<h1>This Application</h1>
@@ -338,9 +338,9 @@ defineDumbElement('print', `
 		min-height: 100%;
 		background-color: white;
 	}
-	:host > appl-hello,
-	:host > appl-facts,
-	:host > appl-life {
+	appl-hello,
+	appl-facts,
+	appl-life {
 		display: block;
 	}
 
@@ -356,7 +356,7 @@ defineDumbElement('print', `
 	/* Chrome does not support page breaks, this hack should fix it but doesn't:
 		html, body, .main, .tabs, .tabbed-content { float: none; }
 	*/
-	:host > .pageBreak {
+	.pageBreak {
 		display: block;
 		page-break-inside: avoid;
 		page-break-after: always;
