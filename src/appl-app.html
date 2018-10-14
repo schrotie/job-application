@@ -1,23 +1,3 @@
-<!--
-	@license
-	Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-	This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-	The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-	The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-	Code distributed by Google as part of the polymer project is also
-	subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
-<link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
-<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
-<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
-<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
-<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
-<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
-
-<link rel="import" href="appl-icons.html">
-
 <link rel="import" href="appl-button.html">
 <link rel="import" href="appl-life.html">
 <link rel="import" href="appl-selector.html">
@@ -26,30 +6,53 @@
 <script>(function() {
 const template = `
 <style>
-	:host {
-		--app-drawer-width: 11em;
-		display: block;
-	}
-
 	#applAppWrapper       appl-print    {display: none;}
 	#applAppWrapper.print appl-print    {display: block;}
 	#applAppWrapper.print appl-selector {display: none;}
 
-	#applAppWrapper app-header {
-		background-color: ${window.applCss.primaryColor};
-		color: ${window.applCss.secondaryColor};
-		font-weight: bold;
-		/*@apply(--shadow-elevation-3dp);*/
-		box-shadow: ${window.applCss.z2shadow};
-	}
-	app-drawer-layout:not([narrow]) [drawer-toggle] {
-		display: none;
+	#applAppWrapper appl-selector {
+		position: fixed;
+		height: 100%;
+		width: 100%;
+		display: flex;
 	}
 
-	#applAppWrapper app-drawer a {
-		margin: 0 4px;
+	#applAppWrapper #menu {
+		padding: 0 1em;
+		z-index:3;
+		background-color: white;
+		overflow-x: hidden;
+		overflow-y: auto;
+		height: 100%;
+		width: 8em;
+		flex: 0 0 8em;
+		transition: 0.5s;
+	}
+	#applAppWrapper #header {left: 10em; transition: 0.5s;}
+	@media screen and (max-width: 640px) {
+		#applAppWrapper #menu {
+			width: 0;
+			flex: 0 0 0;
+			padding: 0;
+		}
+		#applAppWrapper #header {left: 0;}
+
+		#applAppWrapper.showMenu #menu {
+			width: 8em;
+			flex: 0 0 8em;
+			padding: 0 1em;
+		}
+		#applAppWrapper.showMenu #header {left: 10em;}
+	}
+	#applAppWrapper #menu h3 {
+		height: 4em;
+		display: flex;
+		align-items: center;
+		margin: 0;
+	}
+
+	#applAppWrapper #menu a {
 		display: block;
-		padding: 0 16px;
 		text-decoration: none;
 		color: #000;
 		opacity: 0.5;
@@ -57,9 +60,42 @@ const template = `
 		transition: 0.5s;
 	}
 
-	#applAppWrapper app-drawer a.selected {
+	#applAppWrapper #menu a.selected {
 		opacity: 1;
 		font-weight: bold;
+	}
+
+	#applAppWrapper #main {
+		position: relative;
+		padding-top: 4em;
+		flex: 1 1 auto;
+		height: 100%;
+		overflow-y: auto;
+	}
+
+	#applAppWrapper #header {
+		position: fixed;
+		z-index:2;
+		top: 0;
+		height: 4em;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		background-color: ${window.applCss.primaryColor};
+		color: ${window.applCss.secondaryColor};
+		font-weight: bold;
+		/*@apply(--shadow-elevation-3dp);*/
+		box-shadow: ${window.applCss.z2shadow};
+	}
+	#applAppWrapper.hideHeader #header {
+		top: -4.1em;
+	}
+	@media screen and (min-width: 641px) {
+		#applAppWrapper appl-button {position: absolute; top: -1000px;}
+	}
+	#applAppWrapper #title {
+		font-size: 1.3em;
+		margin-left: 1em;
 	}
 
 	#applAppWrapper app-header-layout div {position: relative;}
@@ -91,10 +127,12 @@ const template = `
 		border-radius: 5px;
 		background-color: #fff;
 		max-width: 21cm;
+		margin-bottom: 4em;
 	}
 	@media screen and (min-width: 450px) {
 		.card {
 			margin: 24px;
+			margin-bottom: 5em;
 			box-shadow: ${window.applCss.z1shadow};
 		}
 	}
@@ -102,42 +140,48 @@ const template = `
 </style>
 <div id="applAppWrapper">
 	<appl-selector>
-		<app-drawer-layout fullbleed>
-			<!-- Drawer content -->
-			<app-drawer slot="drawer">
-				<app-toolbar>Contents</app-toolbar>
-				<a data-selector="hello"   href="#hello"  >Hello</a>
-				<a data-selector="facts"   href="#facts"  >Fact Sheet</a>
-				<a data-selector="life"    href="#life"   >Professional</a>
-				<a data-selector="cert"    href="#cert"   >Certificates</a>
-				<a data-selector="samples" href="#samples">Work Samples</a>
-				<a data-selector="contact" href="#contact">Contact</a>
-				<a data-selector="print"   href="#print"  >Print</a>
-			</app-drawer>
+		<section id="menu">
+			<h3>Contents</h3>
+			<a data-selector="hello"   href="#hello"  >Hello</a>
+			<a data-selector="facts"   href="#facts"  >Fact Sheet</a>
+			<a data-selector="life"    href="#life"   >Professional</a>
+			<a data-selector="cert"    href="#cert"   >Certificates</a>
+			<a data-selector="samples" href="#samples">Work Samples</a>
+			<a data-selector="contact" href="#contact">Contact</a>
+			<a data-selector="print"   href="#print"  >Print</a>
+		</section>
 
-			<!-- Main content -->
-			<app-header-layout>
-
-				<app-header slot="header" condenses reveals effects="waterfall">
-					<app-toolbar>
-						<appl-button data-icon="menu" drawer-toggle></appl-button>
-						<div main-title>Thorsten Roggendorf</div>
-					</app-toolbar>
-				</app-header>
-				<div class="card">
-					<appl-hello   data-selected="hello"  ></appl-hello>
-					<appl-facts   data-selected="facts"  ></appl-facts>
-					<appl-life    data-selected="life"   ></appl-life>
-					<appl-cert    data-selected="cert"   ></appl-cert>
-					<appl-samples data-selected="samples"></appl-samples>
-					<appl-contact data-selected="contact"></appl-contact>
-				</div>
-			</app-header-layout>
-		</app-drawer-layout>
+		<!-- Main content -->
+		<section id="main">
+			<section id="header">
+				<appl-button data-icon="menu"></appl-button>
+				<div id="title">Thorsten Roggendorf</div>
+			</section>
+			<section id="content" class="card">
+				<appl-hello   data-selected="hello"  ></appl-hello>
+				<appl-facts   data-selected="facts"  ></appl-facts>
+				<appl-life    data-selected="life"   ></appl-life>
+				<appl-cert    data-selected="cert"   ></appl-cert>
+				<appl-samples data-selected="samples"></appl-samples>
+				<appl-contact data-selected="contact"></appl-contact>
+			</section>
+		</section>
 	</appl-selector>
 	<appl-print id="print"></appl-print>
 </div>
 `;
+
+
+let queued;
+function queuePrint() {
+	if(queued) return;
+	queued = true;
+	setTimeout(function() {
+		queued = false;
+		window.print();
+	}, 100);
+}
+
 
 customElements.define('appl-app', class extends HTMLElement {
 	constructor() {super();}
@@ -145,6 +189,11 @@ customElements.define('appl-app', class extends HTMLElement {
 		this._shadowRoot = this.attachShadow({mode: 'open'});
 		this._shadowRoot.innerHTML = template;
 		this._wrapper = this._shadowRoot.querySelector('#applAppWrapper');
+		this._shadowRoot.querySelector('appl-button')
+		.addEventListener('click', this._toggleMenu.bind(this));
+		this.addEventListener('click', this._hideMenu.bind(this));
+		this._shadowRoot.querySelector('#main')
+		.addEventListener('scroll', this._scroll.bind(this));
 		const link = this._shadowRoot.querySelectorAll('a');
 		const onNav = () => setTimeout(this._pageChanged.bind(this));
 		for(let i = 0; i < link.length; i++) link[i].addEventListener('click', onNav);
@@ -173,16 +222,20 @@ customElements.define('appl-app', class extends HTMLElement {
 		const selector = this.shadowRoot.querySelector('appl-selector');
 		if(selector) selector.selected = page;
 	}
+	_scroll(evt) {
+		const scroll = evt.target.scrollTop;
+		if(scroll > (this._lastScroll || 0)) this._wrapper.classList.add('hideHeader');
+		else this._wrapper.classList.remove('hideHeader');
+		this._lastScroll = scroll;
+	}
+	_toggleMenu(evt) {
+		console.log('_toggleMenu')
+		evt.stopPropagation();
+		this._wrapper.classList.toggle('showMenu');
+	}
+	_hideMenu(evt) {
+		console.log('hideMenu')
+		this._wrapper.classList.remove('showMenu');
+	}
 });
-
-let queued;
-function queuePrint() {
-	if(queued) return;
-	queued = true;
-	setTimeout(function() {
-		queued = false;
-		window.print();
-	}, 100);
-}
-
 })();</script>

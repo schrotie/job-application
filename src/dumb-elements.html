@@ -440,27 +440,25 @@ defineDumbElement('print', `
 		page-break-after: always;
 		position: relative;
 	}
-	/*
+	@media print {
+		:host > appl-hello,
+		:host > appl-facts,
+		:host > appl-life
+		{page-break-after: always;}
+	}
 	@page {
 		size: 21cm 29.7cm;
 		margin: 20mm 20mm 20mm 20mm;
 	}
-	*/
 </style>
 
-<appl-hello   name="hello"  >
+<appl-hello   name="hello"   class="pageBreak">
 	<div class="head">
 		<appl-contact name="contact"></appl-contact>
 	</div>
 </appl-hello>
-<!--
-<div class="pageBreak"></div>
--->
-<appl-facts   name="facts"  ></appl-facts>
-<!--
-<div class="pageBreak"></div>
--->
-<appl-life    name="life" class="print"  ></appl-life>
+<appl-facts   name="facts"   class="pageBreak"></appl-facts>
+<appl-life    name="life" class="print pageBreak"  ></appl-life>
 
 <appl-abi></appl-abi>
 <appl-diplom></appl-diplom>
