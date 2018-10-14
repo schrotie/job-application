@@ -15,149 +15,16 @@
 <link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
-<link rel="import" href="../bower_components/app-route/app-location.html">
-<link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 
 <link rel="import" href="appl-icons.html">
 
-<link rel="import" href="appl-cert.html">
 <link rel="import" href="appl-life.html">
 <link rel="import" href="appl-selector.html">
 <link rel="import" href="dumb-elements.html">
 
-<dom-module id="appl-app">
-	<template>
-		<style include="shared-styles">
-			:host {
-				--app-primary-color: #e0ff6a;
-				--app-secondary-color: #840021;
-				--app-drawer-width: 11em;
-
-				display: block;
-			}
-
-			app-selector {display: none;}
-			app-selector[data-display] {display: none;}
-
-			:host app-header {
-				background-color: var(--app-primary-color);
-				color: var(--app-secondary-color);
-				font-weight: bold;
-				/*@apply(--shadow-elevation-3dp);*/
-				box-shadow: var(--appl-z2-shadow);
-			}
-			:host app-header paper-icon-button {
-				--paper-icon-button-ink-color: var(--app-secondary-color);
-			}
-			app-drawer-layout:not([narrow]) [drawer-toggle] {
-				display: none;
-			}
-
-			:host app-drawer a {
-				margin: 0 20px;
-				display: block;
-				padding: 0 16px;
-				text-decoration: none;
-				color: #000;
-				opacity: 0.5;
-				line-height: 40px;
-				transition: 0.5s;
-			}
-
-			:host app-drawer a.selected {
-				opacity: 1;
-				font-weight: bold;
-			}
-
-			:host app-header-layout div {position: relative;}
-			.card > * {
-				/*transition: opacity 0.5s, display 0s 0s;
-				display: none;*/
-				transition: height 0.5s;
-				opacity: 0;
-				position: absolute;
-				top:0;
-				left: 0;
-				min-width: 100%;
-				height: 0;
-				overflow: hidden;
-			}
-			.card > *.selected {
-				transition: opacity 0.9s, display 0s 0.5s;
-				height: initial;
-				z-index: 1;
-				opacity: 1;
-				display: block;
-				position: static;
-			}
-
-			.card {
-				display: block;
-				padding: 16px;
-				color: #333;
-				border-radius: 5px;
-				background-color: #fff;
-				max-width: 21cm;
-			}
-			@media screen and (min-width: 450px) {
-				.card {
-					margin: 24px;
-					box-shadow: var(--appl-z1-shadow);
-				}
-			}
-
-		</style>
-
-		<app-location route="{{route}}" use-hash-as-path></app-location>
-		<app-route
-			route="{{route}}"
-			pattern=":page"
-			data="{{routeData}}"
-			tail="{{subroute}}"
-		></app-route>
-
-		<appl-selector data-display$="[[!_isPrint(page)]]">
-			<app-drawer-layout fullbleed>
-				<!-- Drawer content -->
-				<app-drawer slot="drawer">
-					<app-toolbar>Contents</app-toolbar>
-					<a data-selector="hello"   href="#hello"  >Hello</a>
-					<a data-selector="facts"   href="#facts"  >Fact Sheet</a>
-					<a data-selector="life"    href="#life"   >Professional</a>
-					<a data-selector="cert"    href="#cert"   >Certificates</a>
-					<a data-selector="samples" href="#samples">Work Samples</a>
-					<a data-selector="contact" href="#contact">Contact</a>
-					<a data-selector="print"   href="#print"  >Print</a>
-				</app-drawer>
-
-				<!-- Main content -->
-				<app-header-layout>
-
-					<app-header slot="header" condenses reveals effects="waterfall">
-						<app-toolbar>
-							<paper-icon-button icon="appl-icons:menu" drawer-toggle></paper-icon-button>
-							<div main-title>Thorsten Roggendorf</div>
-						</app-toolbar>
-					</app-header>
-					<div class="card">
-						<appl-hello   data-selected="hello"  ></appl-hello>
-						<appl-facts   data-selected="facts"  ></appl-facts>
-						<appl-life    data-selected="life"   ></appl-life>
-						<appl-cert    data-selected="cert"   ></appl-cert>
-						<appl-samples data-selected="samples"></appl-samples>
-						<appl-contact data-selected="contact"></appl-contact>
-					</div>
-				</app-header-layout>
-			</app-drawer-layout>
-		</appl-selector>
-		<template is="dom-if" if="[[_isPrint(page)]]">
-			<appl-print id="print"></appl-print>
-		</template>
-	</template>
-
-	<script>(function() {
-var queued;
+<script>(function() {
+let queued;
 function queuePrint() {
 	if(queued) return;
 	queued = true;
@@ -166,29 +33,160 @@ function queuePrint() {
 		window.print();
 	}, 100);
 }
-customElements.define('appl-app', class extends Polymer.Element {
+
+const template = `
+<style>
+	:host {
+		--app-drawer-width: 11em;
+
+		display: block;
+	}
+
+	#wrapper       appl-print    {display: none;}
+	#wrapper.print appl-print    {display: block;}
+	#wrapper.print appl-selector {display: none;}
+
+	:host app-header {
+		background-color: ${window.applCss.primaryColor};
+		color: ${window.applCss.secondaryColor};
+		font-weight: bold;
+		/*@apply(--shadow-elevation-3dp);*/
+		box-shadow: ${window.applCss.z2shadow};
+	}
+	:host app-header paper-icon-button {
+		--paper-icon-button-ink-color: ${window.applCss.secondaryColor};
+	}
+	app-drawer-layout:not([narrow]) [drawer-toggle] {
+		display: none;
+	}
+
+	:host app-drawer a {
+		margin: 0 4px;
+		display: block;
+		padding: 0 16px;
+		text-decoration: none;
+		color: #000;
+		opacity: 0.5;
+		line-height: 40px;
+		transition: 0.5s;
+	}
+
+	:host app-drawer a.selected {
+		opacity: 1;
+		font-weight: bold;
+	}
+
+	:host app-header-layout div {position: relative;}
+	.card > * {
+		/*transition: opacity 0.5s, display 0s 0s;
+		display: none;*/
+		transition: height 0.5s;
+		opacity: 0;
+		position: absolute;
+		top:0;
+		left: 0;
+		min-width: 100%;
+		height: 0;
+		overflow: hidden;
+	}
+	.card > *.selected {
+		transition: opacity 0.9s, display 0s 0.5s;
+		height: initial;
+		z-index: 1;
+		opacity: 1;
+		display: block;
+		position: static;
+	}
+
+	.card {
+		display: block;
+		padding: 16px;
+		color: #333;
+		border-radius: 5px;
+		background-color: #fff;
+		max-width: 21cm;
+	}
+	@media screen and (min-width: 450px) {
+		.card {
+			margin: 24px;
+			box-shadow: ${window.applCss.z1shadow};
+		}
+	}
+
+</style>
+<div id="wrapper">
+	<appl-selector>
+		<app-drawer-layout fullbleed>
+			<!-- Drawer content -->
+			<app-drawer slot="drawer">
+				<app-toolbar>Contents</app-toolbar>
+				<a data-selector="hello"   href="#hello"  >Hello</a>
+				<a data-selector="facts"   href="#facts"  >Fact Sheet</a>
+				<a data-selector="life"    href="#life"   >Professional</a>
+				<a data-selector="cert"    href="#cert"   >Certificates</a>
+				<a data-selector="samples" href="#samples">Work Samples</a>
+				<a data-selector="contact" href="#contact">Contact</a>
+				<a data-selector="print"   href="#print"  >Print</a>
+			</app-drawer>
+
+			<!-- Main content -->
+			<app-header-layout>
+
+				<app-header slot="header" condenses reveals effects="waterfall">
+					<app-toolbar>
+						<paper-icon-button icon="appl-icons:menu" drawer-toggle></paper-icon-button>
+						<div main-title>Thorsten Roggendorf</div>
+					</app-toolbar>
+				</app-header>
+				<div class="card">
+					<appl-hello   data-selected="hello"  ></appl-hello>
+					<appl-facts   data-selected="facts"  ></appl-facts>
+					<appl-life    data-selected="life"   ></appl-life>
+					<appl-cert    data-selected="cert"   ></appl-cert>
+					<appl-samples data-selected="samples"></appl-samples>
+					<appl-contact data-selected="contact"></appl-contact>
+				</div>
+			</app-header-layout>
+		</app-drawer-layout>
+	</appl-selector>
+	<appl-print id="print"></appl-print>
+</div>
+`;
+
+customElements.define('appl-app', class extends HTMLElement {
 	static get is() {return 'appl-app';}
 	constructor() {super();}
-	static get observers() {return ['_routePageChanged(routeData.page)'];}
-	_routePageChanged(page) {
-		this.page = page || 'hello';
-		this._select();
+	connectedCallback() {
+		this._shadowRoot = this.attachShadow({mode: 'open'});
+		this._shadowRoot.innerHTML = template;
+		this._wrapper = this._shadowRoot.querySelector('#wrapper');
+		const link = this._shadowRoot.querySelectorAll('a');
+		const onNav = () => setTimeout(this._pageChanged.bind(this));
+		for(let i = 0; i < link.length; i++) link[i].addEventListener('click', onNav);
+		window.addEventListener('popstate', onNav);
+		this._pageChanged();
+	}
+	_pageChanged() {
+		const page = (location.hash && location.hash.replace('#', '')) || 'hello';
+		this._select(page);
 		try {
 			document.body.scrollTop = 0;
 			document.body.parentElement.scrollTop = 0;
 		} catch(e) {}
 		try {
-			var drawer = this.$$('app-drawer');
+			let drawer = this.$$('app-drawer');
 			if(!drawer.persistent) drawer.close();
 			else this.$$('app-drawer-layout').notifyResize();
 		} catch(e) {}
-		if(page == 'print') queuePrint();
+		if(page == 'print') {
+			this._wrapper.classList.add('print');
+			queuePrint();
+		}
+		else this._wrapper.classList.remove('print');
 	}
-	_select() {
+	_select(page) {
 		const selector = this.shadowRoot.querySelector('appl-selector');
-		if(selector) selector.selected = this.page;
+		if(selector) selector.selected = page;
 	}
-	_isPrint(page) {return page === 'print';}
 });
-	})();</script>
-</dom-module>
+})();</script>

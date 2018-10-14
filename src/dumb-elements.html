@@ -256,6 +256,84 @@ defineDumbElement('contact', `
 	<div>Mail: <a href="mailto:spam@spam.de">spam@spam.de</a></div>
 </address>`);
 
+
+/// cert ///
+defineDumbElement('cert', `
+<style include="shared-styles">
+	:host {
+	}
+	:host > appl-selector {
+		position: relative;
+		padding-top: 150px;
+		display: block;
+	}
+	:host > appl-selector > #selector {
+		display: flex;
+		flex-wrap: nowrap;
+		justify-content: space-between;
+		padding: 2px;
+		overflow-x: auto;
+		position: absolute;
+		top: 16px;
+		left: 16px;
+		right: 16px;
+	}
+	:host > appl-selector:before {
+		content: "\\2190";
+		left: 1px;
+	}
+	:host > appl-selector:after {
+		content: "\\2192";
+		right: 1px;
+	}
+	:host > appl-selector:before,
+	:host > appl-selector:after {
+		position: absolute;
+		top: 75px;
+		opacity: 0.5;
+	}
+	:host > appl-selector > #selector > div  {flex-shrink: 0;}
+	:host > appl-selector > #selector > div > div {white-space: nowrap;}
+	:host > appl-selector > #selector > div > div + * {
+		cursor: pointer;
+		padding: 1px;
+		width: 4em;
+	}
+	:host > appl-selector > #selector > div.selected {
+		outline: 2px solid ${window.applCss.primaryColor};
+	}
+	:host > appl-selector > #selector > div > div {text-align: center;}
+	:host > appl-selector > #selector + div {margin-top: 1em;}
+	:host > appl-selector > #page > * {width: 100%; display: none;}
+	:host > appl-selector > #page > *.selected {display: block;}
+</style>
+<appl-selector>
+	<div id="selector">
+		<div data-selector="abi1"     ><div>Abitur  1</div><appl-abi1     ></appl-abi1></div>
+		<div data-selector="abi2"     ><div>Abitur  2</div><appl-abi2     ></appl-abi2></div>
+		<div data-selector="abi3"     ><div>Abitur  3</div><appl-abi3     ></appl-abi3></div>
+		<div data-selector="abi4"     ><div>Abitur  4</div><appl-abi4     ></appl-abi4></div>
+		<div data-selector="diplom1"  ><div>Diploma 1</div><appl-diplom1  ></appl-diplom1></div>
+		<div data-selector="diplom2"  ><div>Diploma 2</div><appl-diplom2  ></appl-diplom2></div>
+		<div data-selector="promotion"><div>PhD      </div><appl-promotion></appl-promotion></div>
+		<div data-selector="echelon1" ><div>Echelon 1</div><appl-echelon1 ></appl-echelon1></div>
+		<div data-selector="echelon2" ><div>Echelon 2</div><appl-echelon2 ></appl-echelon2></div>
+	</div>
+	<div>Select above to display or <a href="http://schrotie.de/applApp/zeugnisse.pdf">download high-res scans</a>.</div>
+	<div id="page">
+		<appl-abi1      data-selected="abi1"     ></appl-abi1>
+		<appl-abi2      data-selected="abi2"     ></appl-abi2>
+		<appl-abi3      data-selected="abi3"     ></appl-abi3>
+		<appl-abi4      data-selected="abi4"     ></appl-abi4>
+		<appl-diplom1   data-selected="diplom1"  ></appl-diplom1>
+		<appl-diplom2   data-selected="diplom2"  ></appl-diplom2>
+		<appl-promotion data-selected="promotion"></appl-promotion>
+		<appl-echelon1  data-selected="echelon1" ></appl-echelon1>
+		<appl-echelon2  data-selected="echelon2" ></appl-echelon2>
+	</div>
+</appl-selector>`);
+
+
 /// samples ///
 defineDumbElement('samples', `
 <style>
