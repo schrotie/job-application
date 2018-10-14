@@ -15,52 +15,38 @@
 <link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
-<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 
 <link rel="import" href="appl-icons.html">
 
+<link rel="import" href="appl-button.html">
 <link rel="import" href="appl-life.html">
 <link rel="import" href="appl-selector.html">
 <link rel="import" href="dumb-elements.html">
 
 <script>(function() {
-let queued;
-function queuePrint() {
-	if(queued) return;
-	queued = true;
-	setTimeout(function() {
-		queued = false;
-		window.print();
-	}, 100);
-}
-
 const template = `
 <style>
 	:host {
 		--app-drawer-width: 11em;
-
 		display: block;
 	}
 
-	#wrapper       appl-print    {display: none;}
-	#wrapper.print appl-print    {display: block;}
-	#wrapper.print appl-selector {display: none;}
+	#applAppWrapper       appl-print    {display: none;}
+	#applAppWrapper.print appl-print    {display: block;}
+	#applAppWrapper.print appl-selector {display: none;}
 
-	:host app-header {
+	#applAppWrapper app-header {
 		background-color: ${window.applCss.primaryColor};
 		color: ${window.applCss.secondaryColor};
 		font-weight: bold;
 		/*@apply(--shadow-elevation-3dp);*/
 		box-shadow: ${window.applCss.z2shadow};
 	}
-	:host app-header paper-icon-button {
-		--paper-icon-button-ink-color: ${window.applCss.secondaryColor};
-	}
 	app-drawer-layout:not([narrow]) [drawer-toggle] {
 		display: none;
 	}
 
-	:host app-drawer a {
+	#applAppWrapper app-drawer a {
 		margin: 0 4px;
 		display: block;
 		padding: 0 16px;
@@ -71,12 +57,12 @@ const template = `
 		transition: 0.5s;
 	}
 
-	:host app-drawer a.selected {
+	#applAppWrapper app-drawer a.selected {
 		opacity: 1;
 		font-weight: bold;
 	}
 
-	:host app-header-layout div {position: relative;}
+	#applAppWrapper app-header-layout div {position: relative;}
 	.card > * {
 		/*transition: opacity 0.5s, display 0s 0s;
 		display: none;*/
@@ -114,7 +100,7 @@ const template = `
 	}
 
 </style>
-<div id="wrapper">
+<div id="applAppWrapper">
 	<appl-selector>
 		<app-drawer-layout fullbleed>
 			<!-- Drawer content -->
@@ -134,7 +120,7 @@ const template = `
 
 				<app-header slot="header" condenses reveals effects="waterfall">
 					<app-toolbar>
-						<paper-icon-button icon="appl-icons:menu" drawer-toggle></paper-icon-button>
+						<appl-button data-icon="menu" drawer-toggle></appl-button>
 						<div main-title>Thorsten Roggendorf</div>
 					</app-toolbar>
 				</app-header>
@@ -154,12 +140,11 @@ const template = `
 `;
 
 customElements.define('appl-app', class extends HTMLElement {
-	static get is() {return 'appl-app';}
 	constructor() {super();}
 	connectedCallback() {
 		this._shadowRoot = this.attachShadow({mode: 'open'});
 		this._shadowRoot.innerHTML = template;
-		this._wrapper = this._shadowRoot.querySelector('#wrapper');
+		this._wrapper = this._shadowRoot.querySelector('#applAppWrapper');
 		const link = this._shadowRoot.querySelectorAll('a');
 		const onNav = () => setTimeout(this._pageChanged.bind(this));
 		for(let i = 0; i < link.length; i++) link[i].addEventListener('click', onNav);
@@ -189,4 +174,15 @@ customElements.define('appl-app', class extends HTMLElement {
 		if(selector) selector.selected = page;
 	}
 });
+
+let queued;
+function queuePrint() {
+	if(queued) return;
+	queued = true;
+	setTimeout(function() {
+		queued = false;
+		window.print();
+	}, 100);
+}
+
 })();</script>

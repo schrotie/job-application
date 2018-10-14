@@ -1,5 +1,3 @@
-<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="shared-styles.html">
 <script>(function() {
 const template = `<style>
 	:host {
@@ -105,21 +103,10 @@ const template = `<style>
 	:host(.print) > div.filtered > div > span span.emphasis.join:after {
 		content: "";
 	}
-
-
-	:host > div > span > paper-icon-button {
-		color: ${window.applCss.secondaryColor};
-		background-color: ${window.applCss.primaryColor};
-		border-radius: 50%;
-		box-shadow: ${window.applCss.z1shadow};
-	}
-	:host > div > span > paper-icon-button:hover {
-		box-shadow: ${window.applCss.z2shadow};
-	}
 </style>
 <div id="card">
 	<span id="filter">
-		<paper-icon-button icon="appl-icons:filter"></paper-icon-button>
+		<appl-button data-icon="filter" data-shadow="true"></appl-button>
 	</span>
 	<div class="hint">
 		Click/tap qualification to toggle context. Click filter button to

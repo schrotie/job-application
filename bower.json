@@ -6,9 +6,6 @@
 	"license": "http://unlicense.org/",
 	"dependencies": {
 		"app-layout": "PolymerElements/app-layout#^2.0.0",
-		"app-route": "PolymerElements/app-route#^2.0.0",
-		"iron-iconset-svg": "PolymerElements/iron-iconset-svg#^2.0.0",
-		"paper-icon-button": "PolymerElements/paper-icon-button#^2.0.0",
 		"polymer": "Polymer/polymer#^2.0.0",
 		"webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
 	},
