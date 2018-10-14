@@ -10,7 +10,7 @@ const template = `
 	#applAppWrapper.print appl-print    {display: block;}
 	#applAppWrapper.print appl-selector {display: none;}
 
-	#applAppWrapper appl-selector {
+	#applAppWrapper > appl-selector {
 		position: fixed;
 		height: 100%;
 		width: 100%;
@@ -24,11 +24,11 @@ const template = `
 		overflow-x: hidden;
 		overflow-y: auto;
 		height: 100%;
-		width: 8em;
-		flex: 0 0 8em;
+		width: 9em;
+		flex: 0 0 9em;
 		transition: 0.5s;
 	}
-	#applAppWrapper #header {left: 10em; transition: 0.5s;}
+	#applAppWrapper #header {left: 11em; transition: 0.5s;}
 	@media screen and (max-width: 640px) {
 		#applAppWrapper #menu {
 			width: 0;
@@ -38,11 +38,11 @@ const template = `
 		#applAppWrapper #header {left: 0;}
 
 		#applAppWrapper.showMenu #menu {
-			width: 8em;
-			flex: 0 0 8em;
+			width: 9em;
+			flex: 0 0 9em;
 			padding: 0 1em;
 		}
-		#applAppWrapper.showMenu #header {left: 10em;}
+		#applAppWrapper.showMenu #header {left: 11em;}
 	}
 	#applAppWrapper #menu h3 {
 		height: 4em;
@@ -91,7 +91,7 @@ const template = `
 		top: -4.1em;
 	}
 	@media screen and (min-width: 641px) {
-		#applAppWrapper appl-button {position: absolute; top: -1000px;}
+		#applAppWrapper #header > appl-button {position: absolute; top: -1000px;}
 	}
 	#applAppWrapper #title {
 		font-size: 1.3em;
@@ -203,15 +203,7 @@ customElements.define('appl-app', class extends HTMLElement {
 	_pageChanged() {
 		const page = (location.hash && location.hash.replace('#', '')) || 'hello';
 		this._select(page);
-		try {
-			document.body.scrollTop = 0;
-			document.body.parentElement.scrollTop = 0;
-		} catch(e) {}
-		try {
-			let drawer = this.$$('app-drawer');
-			if(!drawer.persistent) drawer.close();
-			else this.$$('app-drawer-layout').notifyResize();
-		} catch(e) {}
+		this._shadowRoot.querySelector('#main').scrollTop = 0;
 		if(page == 'print') {
 			this._wrapper.classList.add('print');
 			queuePrint();

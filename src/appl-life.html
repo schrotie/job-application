@@ -1,84 +1,82 @@
 <script>(function() {
 const template = `<style>
-	:host {
-	}
-	:host > div {
+	#applLifeWrapper {
 		position: relative;
 	}
-	:host > div > div {
+	#applLifeWrapper > div {
 		white-space: nowrap;
 		max-width: 100%;
 		position: relative;
 	}
-	:host > div > div.hint {
+	#applLifeWrapper > div.hint {
 		white-space: normal;
-		margin-right: 2rem;
+		margin-right: 3rem;
 	}
-	:host > div > div ~ div {
+	#applLifeWrapper > div ~ div {
 		margin-top: 1em;
 	}
-	:host > div > div > label {
+	#applLifeWrapper > div > label {
 		vertical-align: top;
 		display: inline-block;
 		width: 5em;
 		font-weight: bold;
 	}
 
-	:host > div > div > label + span {
+	#applLifeWrapper > div > label + span {
 		display: inline-block;
 		white-space: normal;
 		max-width: calc(100% - 5em);
 	}
-	:host > div > div > span > div {margin-bottom: 0.5em;}
-	:host > div > div > span span.emphasis {font-style: italic;}
+	#applLifeWrapper > div > span > div {margin-bottom: 0.5em;}
+	#applLifeWrapper > div > span span.emphasis {font-style: italic;}
 
 
 	@media screen and (max-width: 640px) {
-		:host > div > div > label {
+		#applLifeWrapper > div > label {
 			display: block;
 		}
-		:host > div > div > label + span {
+		#applLifeWrapper > div > label + span {
 			max-width: 100%;
 		}
 	}
 
-	:host > div          > div.hint    {display: none;}
-	:host > div.filtered > div.hint    {display: block;}
-	:host > div.filtered > div         {display: flex;}
-	:host > div.filtered > div > label {flex: 0 0 5em;}
-	:host > div.filtered > div.empty   {display: none;}
-	:host > div.filtered > div > span  {font-size: 0;}
-	:host > div.filtered > div .context{font-size: initial;}
-	:host > div > div > span h4,
-	:host > div.filtered > div > span h4 {
+	#applLifeWrapper > div.hint    {display: none;}
+	#applLifeWrapper.filtered > div.hint    {display: block;}
+	#applLifeWrapper.filtered > div         {display: flex;}
+	#applLifeWrapper.filtered > div > label {flex: 0 0 5em;}
+	#applLifeWrapper.filtered > div.empty   {display: none;}
+	#applLifeWrapper.filtered > div > span  {font-size: 0;}
+	#applLifeWrapper.filtered > div .context{font-size: initial;}
+	#applLifeWrapper > div > span h4,
+	#applLifeWrapper.filtered > div > span h4 {
 		margin: 0;
 		font-size: 1rem;
 	}
-	:host > div.filtered > div > span span.emphasis {
+	#applLifeWrapper.filtered > div > span span.emphasis {
 		font-size: initial;
 		font-style: normal;
 		cursor: pointer;
 	}
-	:host > div.filtered > div > span span.emphasis.toggled {
+	#applLifeWrapper.filtered > div > span span.emphasis.toggled {
 		font-weight: bold;
 	}
-	:host > div.filtered > div > span span.emphasis:after {
+	#applLifeWrapper.filtered > div > span span.emphasis:after {
 		content: ", ";
 		font-size: initial;
 	}
-	:host > div.filtered > div .context span.emphasis:after {
+	#applLifeWrapper.filtered > div .context span.emphasis:after {
 		content: "";
 	}
-	:host > div.filtered > div > span span.emphasis.join:after {
+	#applLifeWrapper.filtered > div > span span.emphasis.join:after {
 		content: " ";
 		font-size: initial;
 	}
-	:host > div.filtered > div > span span.emphasis:last-of-type:after {
+	#applLifeWrapper.filtered > div > span span.emphasis:last-of-type:after {
 		content: "";
 	}
 
 
-	:host > div > span {
+	#applLifeWrapper > span {
 		display: inline-block;
 		position: absolute;
 		top: 5px;
@@ -86,25 +84,27 @@ const template = `<style>
 		z-index: 1;
 	}
 
-	@media print {:host > div > span {display: none;}}
-	:host(.print) > div > span,
-	:host(.print) > div.filtered > .hint {
-		display: none;
-	}
-	:host(.print) > div.filtered > div.empty   {display: block;}
-	:host(.print) > div.filtered > div         {display: block;}
-	:host(.print) > div.filtered > div > label {flex: 0 0 5em;}
-	:host(.print) > div.filtered > div > span  {font-size: initial;}
-	:host(.print) > div.filtered > div > span span.emphasis {
-		font-style: italic;
-		cursor: text;
-	}
-	:host(.print) > div.filtered > div > span span.emphasis:after {content: "";}
-	:host(.print) > div.filtered > div > span span.emphasis.join:after {
-		content: "";
+	@media print {
+		#applLifeWrapper > span {display: none;}
+		#applLifeWrapper > span,
+		#applLifeWrapper.filtered > .hint {
+			display: none;
+		}
+		#applLifeWrapper.filtered > div.empty   {display: block;}
+		#applLifeWrapper.filtered > div         {display: block;}
+		#applLifeWrapper.filtered > div > label {flex: 0 0 5em;}
+		#applLifeWrapper.filtered > div > span  {font-size: initial;}
+		#applLifeWrapper.filtered > div > span span.emphasis {
+			font-style: italic;
+			cursor: text;
+		}
+		#applLifeWrapper.filtered > div > span span.emphasis:after {content: "";}
+		#applLifeWrapper.filtered > div > span span.emphasis.join:after {
+			content: "";
+		}
 	}
 </style>
-<div id="card">
+<div id="applLifeWrapper">
 	<span id="filter">
 		<appl-button data-icon="filter" data-shadow="true"></appl-button>
 	</span>
@@ -398,7 +398,7 @@ customElements.define('appl-life', class extends HTMLElement {
 	}
 	_filter() {
 		this._filtered = !this.filtered;
-		applToggleClass(this.shadowRoot.querySelector('#card'), 'filtered');
+		applToggleClass(this.shadowRoot.querySelector('#applLifeWrapper'), 'filtered');
 	}
 	_context(evt) {
 		if(!this._filtered || /print/.test(this.className)) return;

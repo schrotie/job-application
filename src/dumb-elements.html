@@ -1,6 +1,6 @@
 <script>(function() {
 const h1Style = `h1 {
-	margin: 1em 0 0.5em 0;
+	margin: 0.5em 0 0.1em 0;
 	color: #212121;
 	font-size: 22px;
 }`;
@@ -121,12 +121,17 @@ defineDumbElement('facts', `
 		max-width: calc(100% - 8em);
 	}
 
+	section.personalDetails > div {display: inline-block;}
+
+	appl-toggle-class {float: right;}
+	appl-toggle-class,
 	appl-toggle-class > appl-portrait {
 		width: 17em;
-		float: right;
 		transition: 0.5s;
 		cursor: pointer;
+		display: block;
 	}
+	appl-toggle-class.zoom,
 	section > appl-toggle-class.zoom > appl-portrait {
 		width: 100%;
 	}
@@ -144,13 +149,14 @@ defineDumbElement('facts', `
 		}
 	}
 
-	section.signature {margin-top: 3em;}
 	section.signature > appl-signature {
 		width: 15em;
-		display: block;
+		display: inline-block;
+		margin-left: 3em;
+		vertical-align: middle;
 	}
 </style>
-<section>
+<section class="personalDetails">
 	<appl-toggle-class data-class="zoom">
 		<appl-portrait></appl-portrait>
 	</appl-toggle-class>
@@ -260,14 +266,12 @@ defineDumbElement('contact', `
 /// cert ///
 defineDumbElement('cert', `
 <style include="shared-styles">
-	:host {
-	}
-	:host > appl-selector {
+	#certSelector {
 		position: relative;
 		padding-top: 150px;
 		display: block;
 	}
-	:host > appl-selector > #selector {
+	#certSelector > #selector {
 		display: flex;
 		flex-wrap: nowrap;
 		justify-content: space-between;
@@ -278,36 +282,36 @@ defineDumbElement('cert', `
 		left: 16px;
 		right: 16px;
 	}
-	:host > appl-selector:before {
+	#certSelector:before {
 		content: "\\2190";
 		left: 1px;
 	}
-	:host > appl-selector:after {
+	#certSelector:after {
 		content: "\\2192";
 		right: 1px;
 	}
-	:host > appl-selector:before,
-	:host > appl-selector:after {
+	#certSelector:before,
+	#certSelector:after {
 		position: absolute;
 		top: 75px;
 		opacity: 0.5;
 	}
-	:host > appl-selector > #selector > div  {flex-shrink: 0;}
-	:host > appl-selector > #selector > div > div {white-space: nowrap;}
-	:host > appl-selector > #selector > div > div + * {
+	#certSelector > #selector > div  {flex-shrink: 0;}
+	#certSelector > #selector > div > div {white-space: nowrap;}
+	#certSelector > #selector > div > div + * {
 		cursor: pointer;
 		padding: 1px;
 		width: 4em;
 	}
-	:host > appl-selector > #selector > div.selected {
+	#certSelector > #selector > div.selected {
 		outline: 2px solid ${window.applCss.primaryColor};
 	}
-	:host > appl-selector > #selector > div > div {text-align: center;}
-	:host > appl-selector > #selector + div {margin-top: 1em;}
-	:host > appl-selector > #page > * {width: 100%; display: none;}
-	:host > appl-selector > #page > *.selected {display: block;}
+	#certSelector > #selector > div > div {text-align: center;}
+	#certSelector > #selector + div {margin-top: 1em;}
+	#certSelector > #page > * {width: 100%; display: none;}
+	#certSelector > #page > *.selected {display: block;}
 </style>
-<appl-selector>
+<appl-selector id="certSelector">
 	<div id="selector">
 		<div data-selector="abi1"     ><div>Abitur  1</div><appl-abi1     ></appl-abi1></div>
 		<div data-selector="abi2"     ><div>Abitur  2</div><appl-abi2     ></appl-abi2></div>
@@ -344,8 +348,7 @@ defineDumbElement('samples', `
 	<h1>This Application</h1>
 	<p>
 		This web application was written by Thorsten Roggendorf from
-		scratch. It was build from web components making use of the Polymer
-		web components framework and some of its components.
+		scratch. It was build from vanilla web components.
 		The application was then bundled into a self-contained HTML file
 		that can be loaded directly into a compatible web browser without
 		requiring a web server. It is designed to be fully responsive
@@ -356,28 +359,6 @@ defineDumbElement('samples', `
 		demonstrated <a href="https://roggendorf.pro">here</a>.<br/>
 		The app's source code can be reviewed
 		<a href="https://github.com/schrotie/job-application">here</a>.
-	</p>
-	<h1 class="smallprint">Polymer's license</h1>
-	<p class="smallprint">
-		@license<br/>
-		Copyright (c) 2016 The Polymer Project Authors. All rights reserved.<br/>
-		
-			This code may only be used under the BSD style license found at
-			<a href="http://polymer.github.io/LICENSE.txt">http://polymer.github.io/LICENSE.txt</a>
-		<br/>
-		
-			The complete set of authors may be found at
-			<a href="http://polymer.github.io/AUTHORS.txt">http://polymer.github.io/AUTHORS.txt</a>
-		<br/>
-		
-			The complete set of contributors may be found at
-			<a href="http://polymer.github.io/CONTRIBUTORS.txt">http://polymer.github.io/CONTRIBUTORS.txt</a>
-		<br/>
-		
-			Code distributed by Google as part of the polymer project is also
-			subject to an additional IP rights grant found at
-			<a href="http://polymer.github.io/PATENTS.txt">http://polymer.github.io/PATENTS.txt</a>
-		<br/>
 	</p>
 	<h1>Hotel</h1>
 	<p>
