@@ -6,10 +6,14 @@
 	"plugins": [
 		"html"
   ],
+	"parserOptions": {
+		"ecmaVersion": 6,
+		"sourceType": "module"
+	},
   "rules": {
+		"arrow-parens": "off",
 		"brace-style": "off",
 		"eol-last":"off",
-		"parserOptions": { "ecmaVersion": 6 },
 		"keyword-spacing": "off",
 		"new-cap": ["error", { "capIsNewExceptions": ["Polymer"] }],
 		"no-empty":"off",

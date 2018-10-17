@@ -1,4 +1,3 @@
-<script>(function() {
 const template = `<style>
 	#applLifeWrapper {
 		position: relative;
@@ -380,7 +379,19 @@ const template = `<style>
 	</div>
 </div>`;
 
-/* global applToggleClass */
+
+// classList.toggle not available on IE
+function applToggleClass(element, className, bool) {
+	if(!element) return;
+	var clas = element.className.split(' ');
+	var idx = clas.indexOf(className);
+	if(arguments.length == 2) bool = idx === -1;
+	if((idx !== -1) && bool) return;
+	if(bool) clas.push(className);
+	else clas.splice(idx, 1);
+	element.className = clas.join(' ');
+}
+
 customElements.define('appl-life', class extends HTMLElement {
 	static get is() {return 'appl-life';}
 	constructor() {super();}
@@ -398,7 +409,10 @@ customElements.define('appl-life', class extends HTMLElement {
 	}
 	_filter() {
 		this._filtered = !this.filtered;
-		applToggleClass(this.shadowRoot.querySelector('#applLifeWrapper'), 'filtered');
+		applToggleClass(
+			this.shadowRoot.querySelector('#applLifeWrapper'),
+			'filtered'
+		);
 	}
 	_context(evt) {
 		if(!this._filtered || /print/.test(this.className)) return;
@@ -410,4 +424,3 @@ customElements.define('appl-life', class extends HTMLElement {
 		applToggleClass(evt.target.parentElement, 'context');
 	}
 });
-})();</script>
