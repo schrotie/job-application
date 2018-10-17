@@ -1,7 +1,15 @@
+// util
 import defineDumbElement from './defineDumbElement.js';
 
+// CSS
 import {primaryColor}    from './cssVariables.js';
 import {h1Style}         from './cssVariables.js';
+
+// content
+import hello from './content/hello.js';
+import facts from './content/facts.js';
+import contact from './content/contact.js';
+import samples from './content/samples.js';
 
 // Hello //
 defineDumbElement('hello', `
@@ -10,39 +18,7 @@ defineDumbElement('hello', `
 	div.helloSignature > appl-signature {height: 7em;}
 </style>
 <header><slot></slot></header>
-<p>
-	Dear Reader
-</p>
-<p>
-	This is a demo version of the job application app. I removed
-	some information in order to avoid spamming. If you need this
-	information, you'll have received it from me, please stick to
-	that version.
-</p>
-<p>
-	Otherwise you may be interested in using this for your own job
-	applications. Cool! Go ahead, feel free to swap out all the
-	content and change it however you like.
-</p>
-<p>
-	If you mention me, the original author of this, in the source
-	of your job application I'll feel deeply honored and my belief
-	in the good in man will be boosted. Maybe not my belief in the
-	cunning of man, though: we all have to face real life, and
-	maintaining a mention of me in your job application is not exactly
-	ideal. Therefor this application is non-copyrighted, i.e. public
-	domain under the <a href="http://unlicense.org/">Unlicense</a>.
-	So screw me and get that job/project :-)
-</p>
-<p>
-	Still, I'd obviously love to get improvements back into the source
-	of this application. So pretty please, if you improve upon it,
-	share it back. My personal tentative plans involve some helper
-	tools for quickly generating project applications, or even a UI for
-	customizing the whole thing. But whatever you got, please fork it
-	and drop me a pull request on
-	<a href="https://github.com/schrotie/job-application">GitHub</a>.
-</p>
+${hello}
 <div class="helloSignature"><appl-signature></appl-signature></div>
 `);
 
@@ -120,68 +96,7 @@ defineDumbElement('facts', `
 	<appl-toggle-class data-class="zoom">
 		<appl-portrait></appl-portrait>
 	</appl-toggle-class>
-	<h1>Personal Details</h1>
-	<div>
-		<label>Address</label>
-		<span>
-			<div>Street ##</div>
-			<div>ZIP City</div>
-		</span>
-	</div></br>
-	<div>
-		<label>Family Status</label>
-		<span>married, two kids (foo and bar years)</span>
-	</div></br>
-	<div>
-		<label>Born</label>
-		<span>1972/10/02</span>
-	</div></br>
-	<div>
-		<label>Place of Birth</label>
-		<span>City</span>
-	</div>
-</section>
-<section>
-	<h1>School</h1>
-	<div><label>1979 - 1983</label><span>Hellingskampschule, Bielefeld</span></div>
-	<div><label>1983 - 1984</label><span>Martin Niemöller Gesamtschule, Bielefeld</span></div>
-	<div><label>1984 - 1992</label><span>Max Planck Gymnasium, Bielefeld; Graduation: Abitur</span></div>
-</section>
-<section>
-	<h1>Studies</h1>
-	<div><label>1992 - 1998</label><span>Studies of Biology at Bielefeld University</span></div>
-	<div><label>1998 - 1999</label><span>External diploma thesis at University of Zürich Irchel; Final grade: sehr gut (magna cum laude)</span></div>
-	<div><label>1999 - 2006</label><span>PhD graduation at Bielefeld University; Final grade: sehr gut (magna cum laude)</span></div>
-</section>
-<section>
-	<h1>Profession</h1>
-	<div><label>1999 - 2006</label><span>Scientific assistant at Bielefeld University</span></div>
-	<div><label>2006 - 2013</label><span>Web-Developer at Echelon EDC</span></div>
-	<div><label>2013 - 2017</label><span>CTO, co-founder and partner at ARIGO Software</span></div>
-	<div><label>2017 - 2018</label><span>Lead developer at QiO technologies</span></div>
-	<div><label>2018 - today</label><span>Freelance IT consultant</span></div>
-</section>
-<section>
-	<h1>Languages</h1>
-	<div><label>Deutsch</label><span>mother tongue</span></div>
-	<div><label>English</label><span>fluent in spoken and written</span></div>
-	<div><label>Español</label><span>basic knowledge</span></div>
-</section>
-<section>
-	<h1>Honorary Office</h1>
-	<div><label>2004 - 2010 </label><span>CEO of two kindergartens, initiative and supervision of the fusion of these</span></div>
-	<div><label>2012 - today</label><span>CEO of a citizen's initiative</span></div>
-</section>
-<section>
-	<h1>Interests</h1>
-	<div><label>Music</label><span>Composition, arrangement, vocals, saxophone, rhythm, mixing</span></div>
-	<div><label>Writing</label><span>Prose, political, and utopian texts</span></div>
-	<div><label>Reading</label><span>Science fiction, philosophy</span></div>
-</section>
-<section class="signature">
-	City, the nth of Month YYYY
-	<appl-signature></appl-signature>
-</section>
+${facts}
 `);
 
 // abi //
@@ -210,17 +125,8 @@ defineDumbElement('diplom', `
 
 // contact //
 defineDumbElement('contact', `
-<style>
-	address > div:nth-child(3) {margin-bottom: 1em;}
-</style>
-<address>
-	<div>Thorsten Roggendorf</div>
-	<div>Street ##</div>
-	<div>ZIP City</div>
-
-	<div>Fon: <a href="tel:+49000">+49 000 000000</a></div>
-	<div>Mail: <a href="mailto:spam@spam.de">spam@spam.de</a></div>
-</address>`);
+<style>address > div:nth-child(3) {margin-bottom: 1em;}</style>
+<address>${contact}</address>`);
 
 
 // cert //
@@ -300,49 +206,8 @@ defineDumbElement('cert', `
 
 // samples //
 defineDumbElement('samples', `
-<style>
-	div > .smallprint,
-	div > .smallprint * {font-size: 0.8em;}
-	${h1Style}
-</style>
-	<h1>This Application</h1>
-	<p>
-		This web application was written by Thorsten Roggendorf from
-		scratch. It was build from vanilla web components.
-		The application was then bundled into a self-contained HTML file
-		that can be loaded directly into a compatible web browser without
-		requiring a web server. It is designed to be fully responsive
-		from smart phone to big screens to traditional print / PDF.
-	</p>
-	<p>
-		It does work from a web server without problems, though, as
-		demonstrated <a href="https://roggendorf.pro">here</a>.<br/>
-		The app's source code can be reviewed
-		<a href="https://github.com/schrotie/job-application">here</a>.
-	</p>
-	<h1>Hotel</h1>
-	<p>
-		This set of applications was developed for a hotel where staff
-		and guests use it to control lights and climate in the rooms.
-		It runs on wall mounted tablets and guest smart phones. The
-		navigation menu in the top left is not part of the production
-		app. It was developed for demonstration purpose. In production
-		the different apps run on different addresses / devices.
-		A hallmark of this app are the realistic lighting effects in the
-		guest rooms. Not everything works in this demo, since it relies
-		on data routed through the specific automation network of the
-		hotel. Also it was developed for one specific browser, which runs
-		on the tablets.<br/>
-		Everything is built from web-components, all developed by Thorsten
-		Roggendorf. For performance reasons no Polymer components were
-		used.<br/>
-		Please note that Arigo's UI was a one man show at that point. Upon
-		my many responsibilities being a designer was one I do not particularly
-		pride myself on. All artwork and image processing, layout, color
-		choices ... please bear with me.<br/>
-		You can access the demo
-		<a href="http://schrotie.de/applApp/hotel.html">here</a>
-	</p>
+<style>${h1Style}</style>
+${samples}
 `);
 
 // print //

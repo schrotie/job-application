@@ -1,5 +1,5 @@
 import './appl-button.js';
-import './appl-images.js';
+import './content/appl-images.js';
 import './appl-life.js';
 import './appl-selector.js';
 import './dumb-elements.js';

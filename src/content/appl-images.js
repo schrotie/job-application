@@ -1,4 +1,4 @@
-import defineDumbElement from './defineDumbElement.js';
+import defineDumbElement from '../defineDumbElement.js';
 
 function defineImg(tag, img) {
 	defineDumbElement(tag, `
