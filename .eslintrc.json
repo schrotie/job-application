@@ -5,9 +5,13 @@
 	},
 	"plugins": [
 		"html"
-	],
-	"parserOptions": { "ecmaVersion": 6 },
-	"rules": {
+  ],
+	"parserOptions": {
+		"ecmaVersion": 6,
+		"sourceType": "module"
+	},
+  "rules": {
+		"arrow-parens": "off",
 		"brace-style": "off",
 		"eol-last":"off",
 		"keyword-spacing": "off",
@@ -18,8 +22,5 @@
 		"no-var": "off",
 		"padded-blocks":"off",
 		"require-jsdoc": "off"
-	},
-	"globals": {
-		"Polymer": true
-	}
+  }
 }

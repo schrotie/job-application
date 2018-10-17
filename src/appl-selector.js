@@ -1,4 +1,3 @@
-<script>(function() {
 customElements.define('appl-selector', class extends HTMLElement {
 	constructor() {super();}
 	connectedCallback() {
@@ -31,4 +30,3 @@ customElements.define('appl-selector', class extends HTMLElement {
 
 	_select(evt) {this.select(evt.currentTarget.getAttribute('data-selector'));}
 });
-})();	</script>
