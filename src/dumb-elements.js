@@ -34,6 +34,9 @@ defineDumbElement('facts', `
 	appl-facts {
 		position: relative;
 	}
+	appl-facts h1 {
+		margin: 1rem 0.3rem 0 0;
+	}
 	appl-toggle-class > div > div,
 	section > div {
 		white-space: nowrap;

@@ -13,7 +13,8 @@
 		"polymer-bundler": "^4.0.0",
 		"rollup": "^0.67.1",
 		"rollup-plugin-node-resolve": "^3.4.0",
-		"serve": "latest"
+		"serve": "latest",
+		"uglify-js": "^3.4.9"
 	},
 	"scripts": {
 		"build": "./build.sh",
