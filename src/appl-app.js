@@ -1,13 +1,11 @@
+import '../node_modules/@webcomponents/custom-elements/src/custom-elements.js';
+import cssVars from '../node_modules/css-vars-ponyfill/dist/css-vars-ponyfill.esm.js';
+
 import './appl-button.js';
 import './content/appl-images.js';
 import './appl-life.js';
 import './appl-selector.js';
 import './dumb-elements.js';
-
-import {primaryColor}   from './cssVariables.js';
-import {secondaryColor} from './cssVariables.js';
-import {z1shadow}       from './cssVariables.js';
-import {z2shadow}       from './cssVariables.js';
 
 const template = `
 <style>
@@ -59,7 +57,7 @@ const template = `
 	#applAppWrapper #menu a {
 		display: block;
 		text-decoration: none;
-		color: #000;
+		color: var(--primary-color);
 		opacity: 0.5;
 		line-height: 40px;
 		transition: 0.5s;
@@ -86,11 +84,11 @@ const template = `
 		width: 100%;
 		display: flex;
 		align-items: center;
-		background-color: ${primaryColor};
-		color: ${secondaryColor};
+		background-color: var(--secondary-color);
+		color: var(--primary-color);
 		font-weight: bold;
 		/*@apply(--shadow-elevation-3dp);*/
-		box-shadow: ${z2shadow};
+		box-shadow: var(--z2-shadow);
 	}
 	#applAppWrapper.hideHeader #header {
 		top: -4.1em;
@@ -101,6 +99,7 @@ const template = `
 	#applAppWrapper #title {
 		font-size: 1.3em;
 		margin-left: 1em;
+		color: var(--primary-color);
 	}
 
 	#applAppWrapper app-header-layout div {position: relative;}
@@ -118,7 +117,7 @@ const template = `
 	}
 	.card > *.selected {
 		transition: opacity 0.9s, display 0s 0.5s;
-		height: initial;
+		height: auto;
 		z-index: 1;
 		opacity: 1;
 		display: block;
@@ -138,7 +137,7 @@ const template = `
 		.card {
 			margin: 24px;
 			margin-bottom: 5em;
-			box-shadow: ${z1shadow};
+			box-shadow: var(--z1-shadow);
 		}
 	}
 
@@ -189,15 +188,14 @@ function queuePrint() {
 customElements.define('appl-app', class extends HTMLElement {
 	constructor() {super();}
 	connectedCallback() {
-		this._shadowRoot = this.attachShadow({mode: 'open'});
-		this._shadowRoot.innerHTML = template;
-		this._wrapper = this._shadowRoot.querySelector('#applAppWrapper');
-		this._shadowRoot.querySelector('appl-button')
+		this.innerHTML = template;
+		this._wrapper = this.querySelector('#applAppWrapper');
+		this.querySelector('appl-button')
 		.addEventListener('click', this._toggleMenu.bind(this));
 		this.addEventListener('click', this._hideMenu.bind(this));
-		this._shadowRoot.querySelector('#main')
+		this.querySelector('#main')
 		.addEventListener('scroll', this._scroll.bind(this));
-		const link = this._shadowRoot.querySelectorAll('a');
+		const link = this.querySelectorAll('a');
 		const onNav = () => setTimeout(this._pageChanged.bind(this));
 		for(let i = 0; i < link.length; i++) {
 			link[i].addEventListener('click', onNav);
@@ -208,7 +206,7 @@ customElements.define('appl-app', class extends HTMLElement {
 	_pageChanged() {
 		const page = (location.hash && location.hash.replace('#', '')) || 'hello';
 		this._select(page);
-		this._shadowRoot.querySelector('#main').scrollTop = 0;
+		this.querySelector('#main').scrollTop = 0;
 		if(page == 'print') {
 			this._wrapper.classList.add('print');
 			queuePrint();
@@ -216,7 +214,7 @@ customElements.define('appl-app', class extends HTMLElement {
 		else this._wrapper.classList.remove('print');
 	}
 	_select(page) {
-		const selector = this.shadowRoot.querySelector('appl-selector');
+		const selector = this.querySelector('appl-selector');
 		if(selector) selector.selected = page;
 	}
 	_scroll(evt) {
@@ -235,3 +233,5 @@ customElements.define('appl-app', class extends HTMLElement {
 		this._wrapper.classList.remove('showMenu');
 	}
 });
+
+cssVars();

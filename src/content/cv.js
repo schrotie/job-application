@@ -264,4 +264,41 @@ export default `
 		<span class="emphasis">Service Worker</span>
 		to lower the loading delays.
 	</span>
+</div>
+<div>
+	<label>2018</label>
+	<span>
+		<h4>Free Software</h4>
+		<div>
+		When working on a private project I found myself (again) impressed by
+		the lengths to which modern frameworks go in order to break the web
+		platform - and ended up writing my own. I wanted to figure out the bare
+		minimum required to write a bleeding edge modern web application. The
+		result is
+		<a href="https://github.com/schrotie/shadow-query">ShadowQuery</a>, a
+		minimal, nano-sized library that helps avoiding the repetition of
+		boilerplate when developing with
+		<span class="emphasis">HTML5</span>,
+		<span class="emphasis">CSS3</span>,
+		<span class="emphasis">JavaScript</span>,
+		<span class="emphasis">web components</span>,
+		and nothing else. 
+		</div>
+		<div>
+		When compared to apps built on common frameworks like Angular/React/Vue,
+		apps developed with a strong focus on maximizing the use of
+		<span class="emphasis">native technology</span>,
+		turned out to lack nothing in terms of
+		<span class="emphasis">code readability</span>,
+		<span class="emphasis">expressiveness</span>,
+		<span class="emphasis">consiseness</span>,
+		<span class="emphasis">reuse</span>, and
+		<span class="emphasis">maintainability</span>.
+		The do, however, fare far better in terms of
+		<span class="emphasis">performance</span> and
+		<span class="emphasis">footprint</span>, as demonstrated in a dbmonster
+		demo. This is true even for browsers that do not yet support the full
+		web platform stack and thus have to use polyfills.
+		</div>
+	</span>
 </div>`;

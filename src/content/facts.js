@@ -1,25 +1,29 @@
 export default `
-	<h1>Personal Details</h1>
+<appl-toggle-class data-class="zoom">
+	<appl-portrait></appl-portrait>
 	<div>
-		<label>Address</label>
-		<span>
-			<div>Street ##</div>
-			<div>ZIP City</div>
-		</span>
-	</div></br>
-	<div>
-		<label>Family Status</label>
-		<span>married, two kids (foo and bar years)</span>
-	</div></br>
-	<div>
-		<label>Born</label>
-		<span>1972/10/02</span>
-	</div></br>
-	<div>
-		<label>Place of Birth</label>
-		<span>City</span>
+		<h1>Personal Details</h1>
+		<div>
+			<label>Address</label>
+			<span>
+				<div>Street ##</div>
+				<div>ZIP City</div>
+			</span>
+		</div>
+		<div>
+			<label>Family Status</label>
+			<span>married, two kids (foo and bar years)</span>
+		</div>
+		<div>
+			<label>Born</label>
+			<span>1972/10/02</span>
+		</div>
+		<div>
+			<label>Place of Birth</label>
+			<span>City</span>
+		</div>
 	</div>
-</section>
+</appl-toggle-class>
 <section>
 	<h1>School</h1>
 	<div><label>1979 - 1983</label><span>Hellingskampschule, Bielefeld</span></div>
@@ -32,14 +36,14 @@ export default `
 	<div><label>1998 - 1999</label><span>External diploma thesis at University of Zürich Irchel; Final grade: sehr gut (magna cum laude)</span></div>
 	<div><label>1999 - 2006</label><span>PhD graduation at Bielefeld University; Final grade: sehr gut (magna cum laude)</span></div>
 </section>
-<section>
+<!--section>
 	<h1>Profession</h1>
 	<div><label>1999 - 2006</label><span>Scientific assistant at Bielefeld University</span></div>
 	<div><label>2006 - 2013</label><span>Web-Developer at Echelon EDC</span></div>
 	<div><label>2013 - 2017</label><span>CTO, co-founder and partner at ARIGO Software</span></div>
 	<div><label>2017 - 2018</label><span>Lead developer at QiO technologies</span></div>
 	<div><label>2018 - today</label><span>Freelance IT consultant</span></div>
-</section>
+</section-->
 <section>
 	<h1>Languages</h1>
 	<div><label>Deutsch</label><span>mother tongue</span></div>

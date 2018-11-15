@@ -46,14 +46,14 @@ const template = `<style>
 	#applLifeWrapper.filtered > div > label {flex: 0 0 5em;}
 	#applLifeWrapper.filtered > div.empty   {display: none;}
 	#applLifeWrapper.filtered > div > span  {font-size: 0;}
-	#applLifeWrapper.filtered > div .context{font-size: initial;}
+	#applLifeWrapper.filtered > div .context{font-size: 1rem;}
 	#applLifeWrapper > div > span h4,
 	#applLifeWrapper.filtered > div > span h4 {
 		margin: 0;
 		font-size: 1rem;
 	}
 	#applLifeWrapper.filtered > div > span span.emphasis {
-		font-size: initial;
+		font-size: 1rem;
 		font-style: normal;
 		cursor: pointer;
 	}
@@ -62,14 +62,14 @@ const template = `<style>
 	}
 	#applLifeWrapper.filtered > div > span span.emphasis:after {
 		content: ", ";
-		font-size: initial;
+		font-size: 1rem;
 	}
 	#applLifeWrapper.filtered > div .context span.emphasis:after {
 		content: "";
 	}
 	#applLifeWrapper.filtered > div > span span.emphasis.join:after {
 		content: " ";
-		font-size: initial;
+		font-size: 1rem;
 	}
 	#applLifeWrapper.filtered > div > span span.emphasis:last-of-type:after {
 		content: "";
@@ -93,7 +93,7 @@ const template = `<style>
 		#applLifeWrapper.filtered > div.empty   {display: block;}
 		#applLifeWrapper.filtered > div         {display: block;}
 		#applLifeWrapper.filtered > div > label {flex: 0 0 5em;}
-		#applLifeWrapper.filtered > div > span  {font-size: initial;}
+		#applLifeWrapper.filtered > div > span  {font-size: 1rem;}
 		#applLifeWrapper.filtered > div > span span.emphasis {
 			font-style: italic;
 			cursor: text;
@@ -132,13 +132,12 @@ customElements.define('appl-life', class extends HTMLElement {
 	static get is() {return 'appl-life';}
 	constructor() {super();}
 	connectedCallback() {
-		this._shadowRoot = this.attachShadow({mode: 'open'});
-		this._shadowRoot.innerHTML = template;
-		this._shadowRoot.querySelector('#filter')
+		this.innerHTML = template;
+		this.querySelector('#filter')
 		.addEventListener('click', this._filter.bind(this));
 		this._filter();
 		const context = this._context.bind(this);
-		const emphasis = this._shadowRoot.querySelectorAll('.emphasis');
+		const emphasis = this.querySelectorAll('.emphasis');
 		for(let i = 0; i < emphasis.length; i++) {
 			emphasis[i].addEventListener('click', context);
 		}
@@ -146,15 +145,15 @@ customElements.define('appl-life', class extends HTMLElement {
 	_filter() {
 		this._filtered = !this.filtered;
 		applToggleClass(
-			this.shadowRoot.querySelector('#applLifeWrapper'),
+			this.querySelector('#applLifeWrapper'),
 			'filtered'
 		);
 	}
 	_context(evt) {
 		if(!this._filtered || /print/.test(this.className)) return;
 		var revert = evt.target.className.match(/toggled/);
-		applToggleClass(this.shadowRoot.querySelector('.context'), 'context');
-		applToggleClass(this.shadowRoot.querySelector('.toggled'), 'toggled');
+		applToggleClass(this.querySelector('.context'), 'context');
+		applToggleClass(this.querySelector('.toggled'), 'toggled');
 		if(revert) return;
 		applToggleClass(evt.target, 'toggled');
 		applToggleClass(evt.target.parentElement, 'context');

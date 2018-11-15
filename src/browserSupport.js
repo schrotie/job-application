@@ -1,15 +1,6 @@
 (function() {
 if(!supported()) notSupported();
 
-window.applCss = new (class {
-	constructor() {
-		this.primaryColor   = '#e0ff6a';
-		this.secondaryColor = '#840021';
-		this.z1shadow = '0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2)';
-		this.z2shadow = '0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 1px 8px 0 rgba(0, 0, 0, 0.12), 0 3px 3px -2px rgba(0, 0, 0, 0.4)';
-	}
-});
-
 function supported() {
 	try {eval(
 			'const foo = class extends HTMLElement {constructor() {super(`${1+1}`)}}'

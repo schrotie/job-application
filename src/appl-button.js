@@ -1,8 +1,3 @@
-import {primaryColor}   from './cssVariables.js';
-import {secondaryColor} from './cssVariables.js';
-import {z1shadow}       from './cssVariables.js';
-import {z2shadow}       from './cssVariables.js';
-
 const path = {
 	arrowBack: 'M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z',
 	menu: `m 0,12 18,0 0,-2 -18,0 0,2 z m 0,-5 18,0 0,-2 -18,0 0,2 z m 0,-7\
@@ -24,9 +19,6 @@ const path = {
 		-1.987465,-1.98746817 l -3.564041,0 z`,
 };
 
-const noHoverShadow = `box-shadow: ${z1shadow};`;
-const hoverShadow = `#applButtonWrapper:hover {box-shadow: ${z2shadow};}`;
-
 function template(icon, shadow) {return `
 	<style>
 #applButtonWrapper {
@@ -34,29 +26,30 @@ function template(icon, shadow) {return `
 	width:  40px;
 	height: 40px;
 	border-radius: 50%;
-	background-color: ${primaryColor};
+	background-color: var(--secondary-color);
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	${shadow ? noHoverShadow : ''}
 }
-${shadow ? hoverShadow : ''}
+appl-button[data-shadow] #applButtonWrapper       {
+	box-shadow: var(--z1-shadow);
+}
+appl-button[data-shadow] #applButtonWrapper:hover {
+	box-shadow: var(--z2-shadow);
+};
 svg {
 	width:  20px;
 	height: 20px;
 }
-path {fill: ${secondaryColor};}
+path {fill: var(--primary-color);}
 	</style>
 	<div id="applButtonWrapper"><svg><path d="${path[icon]}"</svg></div>
 `;}
 customElements.define('appl-button', class extends HTMLElement {
 	constructor() {super();}
 	connectedCallback() {
-		this._shadowRoot = this.attachShadow({mode: 'open'});
-		this._shadowRoot.innerHTML = template(
-			this.getAttribute('data-icon'), this.hasAttribute('data-shadow')
-		);
-		const svg = this._shadowRoot.querySelector('svg');
+		this.innerHTML = template(this.getAttribute('data-icon'));
+		const svg = this.querySelector('svg');
 		const path = svg.querySelector('path');
 		const box = path.getBoundingClientRect();
 		svg.style.width  = `${box.width + 1}px`;

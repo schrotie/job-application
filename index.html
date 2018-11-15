@@ -9,17 +9,32 @@
 
 		<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QQDDS0TWrXjywAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAACTSURBVDjLY2RgYPjPQBgw4pJgYqAy+E+ki6jnApob8B8N/2VgYHjMwMAwm4GBQZiYMPiPB68ixQCYayUZGBgaoWLvSTUABgSgYk9JDUQOBgYGLQYGhplQ/jpKwmAHAwMDHykJCxl/ZWBgkCMnZXIyMDBchPIPMzAwMJOTtFUZGBg+QsWayc0bIUiJyoHczDURFpUAwvtCJPMwWpUAAAAASUVORK5CYII=">
 
-		<script type="module" src="./node_modules/@webcomponents/custom-elements/src/custom-elements.js"></script>
-		<script src="./src/browserSupport.js"></script>
-		<script type="module" src="/src/appl-app.js"></script>
+		<script type="module" src="src/appl-app.js"></script>
 
 		<style>
+:root {
+--primary-color  : #704214;
+--secondary-color: #f7f4ed;
+--z1-shadow      :
+ 	0 2px 2px  0   rgba(0, 0, 0, 0.14),
+	0 1px 5px  0   rgba(0, 0, 0, 0.12),
+	0 3px 1px -2px rgba(0, 0, 0, 0.2);
+--z2-shadow      :
+	0 3px 4px  0   rgba(0, 0, 0, 0.14),
+	0 1px 8px  0   rgba(0, 0, 0, 0.12),
+	0 3px 3px -2px rgba(0, 0, 0, 0.2);
+}
 body {
 	margin: 0;
 	font-family: 'Roboto', 'Noto', sans-serif;
 	line-height: 1.5;
 	min-height: 100vh;
 	background-color: #eeeeee;
+}
+h1 {
+	margin: 0.5em 0 0.1em 0;
+	color: #212121;
+	font-size: 22px;
 }
 		</style>
 	</head>

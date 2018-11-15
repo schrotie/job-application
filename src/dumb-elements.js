@@ -1,10 +1,6 @@
 // util
 import defineDumbElement from './defineDumbElement.js';
 
-// CSS
-import {primaryColor}    from './cssVariables.js';
-import {h1Style}         from './cssVariables.js';
-
 // content
 import hello from './content/hello.js';
 import facts from './content/facts.js';
@@ -17,7 +13,6 @@ defineDumbElement('hello', `
 	div.helloSignature {max-width: 20em; text-align: right;}
 	div.helloSignature > appl-signature {height: 7em;}
 </style>
-<header><slot></slot></header>
 ${hello}
 <div class="helloSignature"><appl-signature></appl-signature></div>
 `);
@@ -36,43 +31,53 @@ customElements.define('appl-toggle-class', class extends HTMLElement {
 
 defineDumbElement('facts', `
 <style>
-	:host {
+	appl-facts {
 		position: relative;
 	}
+	appl-toggle-class > div > div,
 	section > div {
 		white-space: nowrap;
 		max-width: 100%;
 	}
-	section:first-child > div {
-		display: inline-block;
-	}
+	appl-toggle-class > div > div > label,
 	section > div > label {
 		vertical-align: top;
 		display: inline-block;
 		width: 8em;
 	}
+	appl-toggle-class > div > div > label + span,
 	section > div > label + span {
 		display: inline-block;
 		white-space: normal;
 		max-width: calc(100% - 8em);
 	}
 
-	section.personalDetails > div {display: inline-block;}
-
-	appl-toggle-class {float: right;}
-	appl-toggle-class,
+	appl-toggle-class {
+		display: flex;
+		flex-direction: row-reverse;
+		justify-content: space-between;
+	}
+	appl-toggle-class.zoom {
+		flex-direction: column;
+	}
 	appl-toggle-class > appl-portrait {
 		width: 17em;
 		transition: 0.5s;
 		cursor: pointer;
 		display: block;
 	}
-	appl-toggle-class.zoom,
-	section > appl-toggle-class.zoom > appl-portrait {
+	appl-toggle-class.zoom > appl-portrait {
 		width: 100%;
 	}
-
-	${h1Style}
+	@media screen and (max-width: 800px) {
+		appl-toggle-class {
+			flex-direction: column;
+		}
+		appl-toggle-class,
+		appl-toggle-class > appl-portrait {
+			width: 100%;
+		}
+	}
 
 	@media screen and (min-width: 400px) {
 		section.signature {
@@ -92,17 +97,13 @@ defineDumbElement('facts', `
 		vertical-align: middle;
 	}
 </style>
-<section class="personalDetails">
-	<appl-toggle-class data-class="zoom">
-		<appl-portrait></appl-portrait>
-	</appl-toggle-class>
 ${facts}
 `);
 
 // abi //
 defineDumbElement('abi', `
 <style>
-	:host {
+	appl-abi {
 		display: block;
 		width: inherit;
 	}
@@ -115,7 +116,7 @@ defineDumbElement('abi', `
 // diplom //
 defineDumbElement('diplom', `
 <style>
-	:host {
+	appl-diplom {
 		display: block;
 		width: inherit;
 	}
@@ -170,7 +171,7 @@ defineDumbElement('cert', `
 		width: 4em;
 	}
 	#certSelector > #selector > div.selected {
-		outline: 2px solid ${primaryColor};
+		outline: 2px solid var(--primary-color);
 	}
 	#certSelector > #selector > div > div {text-align: center;}
 	#certSelector > #selector + div {margin-top: 1em;}
@@ -205,68 +206,75 @@ defineDumbElement('cert', `
 
 
 // samples //
-defineDumbElement('samples', `
-<style>${h1Style}</style>
-${samples}
-`);
+defineDumbElement('samples', samples);
 
 // print //
 defineDumbElement('print', `
 <style>
-	:host {
+	appl-print {
 		display: block;
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		min-height: 100%;
+		position: relative;
 		background-color: white;
-	}
-	appl-hello,
-	appl-facts,
-	appl-life {
-		display: block;
+		page-break-inside: auto;
+		break-inside: auto;
 	}
 
-	:host .head {
+	appl-print .head {
 		position: relative;
 		height: 15em;
 	}
-	:host appl-contact {
+	appl-print appl-contact {
 		position: absolute;
 		top: 0;
 		right: 0;
 	}
+
 	/* Chrome does not support page breaks, this hack should fix it but doesn't:
 		html, body, .main, .tabs, .tabbed-content { float: none; }
 	*/
-	.pageBreak {
-		display: block;
-		page-break-inside: avoid;
-		page-break-after: always;
-		position: relative;
-	}
 	@media print {
-		:host > appl-hello,
-		:host > appl-facts,
-		:host > appl-life
-		{page-break-after: always;}
-	}
-	@page {
-		size: 21cm 29.7cm;
-		margin: 20mm 20mm 20mm 20mm;
+		appl-print {
+			min-height: initial;
+			page-break-inside: auto;
+			break-inside: auto;
+		}
+		appl-print > h1 {
+			page-break-before: always;
+		}
+
+		appl-print .pageBreak,
+		appl-print appl-samples ~ * > style ~ * {
+			position: relative;
+			display: block;
+			page-break-after: always;
+			break-after: page;
+		}
+		appl-print appl-samples ~ * > style ~ * {
+			width: 100%;
+			height: 100%;
+		}
+		@page * {
+			size: 21cm 29.7cm;
+			margin: 20mm 20mm 20mm 20mm;
+		}
 	}
 </style>
 
-<appl-hello   name="hello"   class="pageBreak">
-	<div class="head">
-		<appl-contact name="contact"></appl-contact>
-	</div>
+<appl-hello   class="pageBreak">
+	<header><div class="head">
+		<appl-contact></appl-contact>
+	</div></header>
 </appl-hello>
-<appl-facts   name="facts"   class="pageBreak"></appl-facts>
-<appl-life    name="life" class="print pageBreak"  ></appl-life>
 
-<appl-abi></appl-abi>
+<appl-facts   class="pageBreak"></appl-facts>
+
+<h1>Professional Experience</h1>
+<appl-life    class="pageBreak print"></appl-life>
+
+<h1>Work Samples</h1>
+<appl-samples class="pageBreak"></appl-samples>
+
+<appl-abi class="pageBreak"></appl-abi>
 <appl-diplom></appl-diplom>
 <appl-promotion></appl-promotion>
 <appl-echelon1></appl-echelon1>

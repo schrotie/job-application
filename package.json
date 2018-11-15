@@ -1,18 +1,26 @@
 {
-  "name": "job-application",
-  "license": "http://unlicense.org/",
-  "version": "0.9.0",
-  "devDependencies": {
-    "eslint": "^3.12.0",
-    "eslint-config-google": "^0.7.1",
-    "eslint-plugin-html": "^1.7.0",
-    "polymer-bundler": "^4.0.0"
-  },
-  "scripts": {
-    "lint": "eslint . --ext js,html --ignore-path .gitignore",
-	 "build": "node_modules/polymer-bundler/lib/bin/polymer-bundler.js --strip-comments --inline-scripts --inline-css index.html > ThorstenRoggendorf.html"
-  },
-  "dependencies": {
-    "@webcomponents/custom-elements": "^1.0.0"
-  }
+	"name": "job-application",
+	"license": "http://unlicense.org/",
+	"version": "0.9.0",
+	"devDependencies": {
+		"@babel/cli": "^7.1.5",
+		"@babel/core": "^7.1.6",
+		"@babel/preset-env": "^7.1.6",
+		"css-vars-ponyfill": "^1.15.1",
+		"eslint": "^3.12.0",
+		"eslint-config-google": "^0.7.1",
+		"eslint-plugin-html": "^1.7.0",
+		"polymer-bundler": "^4.0.0",
+		"rollup": "^0.67.1",
+		"rollup-plugin-node-resolve": "^3.4.0",
+		"serve": "latest"
+	},
+	"scripts": {
+		"build": "./build.sh",
+		"lint": "eslint . --ext js,html --ignore-path .gitignore",
+		"start": "./node_modules/.bin/serve"
+	},
+	"dependencies": {
+		"@webcomponents/custom-elements": "^1.0.0"
+	}
 }
