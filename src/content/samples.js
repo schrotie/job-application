@@ -14,6 +14,29 @@ export default `
 		The app's source code can be reviewed
 		<a href="https://github.com/schrotie/job-application">here</a>.
 	</p>
+	<h1>ShadowQuery</h1>
+	<p>
+		<a href="https://github.com/schrotie/shadow-query">ShadowQuery</a>
+		is a nano sized utilities library for writing vanilla web components.
+		At a tiny footprint of just 1.8k it allows developers to create
+		great performing web components using only a few helpers that come in
+		an established API syntax that most web developers know - and the
+		features of the modern web platform.
+	</p>
+	<p>
+		It ships with a demonstration of the commonly used dbmonster benchmark.
+		The whole demo including ShadowQuery is below 10K, has only 100 lines
+		of well structured code plus templates and outperforms 95+% of the
+		<a href="https://mathieuancelin.github.io/js-repaint-perfs/">dbmonster
+		repaint challenge</a> - including all major frameworks - with regards to
+		render velocity and memory consumption.
+	</p>
+	<p>
+		This is achieved by a revolutionary out of the box thinking approach to
+		modern app development that does away with certain development patterns,
+		that I increasingly
+		<a href="https://www.linkedin.com/pulse/web-platform-rescue-dr-thorsten-roggendorf/">come to doubt</a>.
+	</p>
 	<h1>Hotel</h1>
 	<p>
 		This set of applications was developed for a hotel where staff
