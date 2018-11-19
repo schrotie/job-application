@@ -17,9 +17,9 @@ export default `
 	<h1>ShadowQuery</h1>
 	<p>
 		<a href="https://github.com/schrotie/shadow-query">ShadowQuery</a>
-		is a nano sized utilities library for writing vanilla web components.
-		At a tiny footprint of just 1.8k it allows developers to create
-		great performing web components using only a few helpers that come in
+		is a micro-library for writing high performance vanilla web components.
+		At a tiny footprint of just 2k it allows developers to create
+		great performing web applications using only a few helpers that come in
 		an established API syntax that most web developers know - and the
 		features of the modern web platform.
 	</p>
@@ -32,10 +32,12 @@ export default `
 		render velocity and memory consumption.
 	</p>
 	<p>
-		This is achieved by a revolutionary out of the box thinking approach to
-		modern app development that does away with certain development patterns,
-		that I increasingly
-		<a href="https://www.linkedin.com/pulse/web-platform-rescue-dr-thorsten-roggendorf/">come to doubt</a>.
+		This is achieved by a
+		<a href="https://blog.roggendorf.pro/2018/11/17/the-perfect-web-application-framework/">revolutionary</a>
+		out of the box thinking approach to
+		<a href="https://blog.roggendorf.pro/2018/11/19/native-web-application-tutorial/">modern app development</a>
+		that does away with certain development patterns, that I increasingly
+		<a href="https://blog.roggendorf.pro/2018/11/15/web-platform-to-the-rescue/">come to doubt</a>.
 	</p>
 	<h1>Hotel</h1>
 	<p>
